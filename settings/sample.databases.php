@@ -2,7 +2,7 @@
 return array (
 	'default' => array(
 		'host' 		=> '127.0.0.1',
-		'name' 		=> 'eden_v4',
+		'name' 		=> 'eve_framework',
 		'user' 		=> 'root',
 		'pass' 		=> '',
 		'type' 		=> 'mysql',
