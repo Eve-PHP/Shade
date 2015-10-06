@@ -24,64 +24,24 @@ use Eve\App\Dialog\Action\Invalid;
 class Route extends Base 
 {
     const INSTANCE = 1;
+	
     const FAIL_401 = 'Invalid Request';
     
-	public static $roles = array(
-		'public_profile' => array(
-            'title' => 'Profiles',
-            'description' => 'Get a profile detail from a buyer or seller',
-            'icon' => 'user'
-        ),
-        'public_sso' => array(
-            'title' => 'Single Sign On',
-            'description' => 'Use our Single Sign On',
-            'icon' => 'lock'
-        ),
-		'personal_profile' => array(
-            'title' => 'Profile',
-            'description' => 'Access user profile',
-            'icon' => 'user'
-        ),
-		'user_profile' => array(
-            'title' => 'Profile',
-            'description' => 'Access user profile',
-            'icon' => 'user'
-        ),
-		'global_profile' => array(
-            'title' => 'Profile',
-            'description' => 'Access all profiles',
-            'icon' => 'user'
-        )
-	);
+	public static $roles = array();
     
-    public $routes = array(
-        '/dialog/login' => array(
-            'method' => 'ALL',
-            'role' => 'public_sso',
-            'class' => '\\Eve\\App\\Dialog\\Action\\Login'
-        ),
-        '/dialog/request' => array(
-            'method' => 'ALL',
-            'role' => 'public_sso',
-            'class' => '\\Eve\\App\\Dialog\\Action\\Request'
-        ),
-        '/dialog/create' => array(
-            'method' => 'ALL',
-            'role' => 'public_sso',
-            'class' => '\\Eve\\App\\Dialog\\Action\\Create'
-        ),
-        '/dialog/update' => array(
-            'method' => 'ALL',
-            'role' => 'public_sso',
-            'class' => '\\Eve\\App\\Dialog\\Action\\Update'
-        ),
-        '/dialog/logout' => array(
-            'method' => 'GET',
-            'role' => 'public_sso',
-            'class' => '\\Eve\\App\\Dialog\\Action\\Logout'
-        )
-    );
+    public $routes = array();
     
+	/**
+     * Include routes
+     *
+     * @return void
+     */
+	public function __construct()
+	{
+		$this->routes = include 'routes.php';
+		self::$roles = include 'roles.php';
+	}
+	
     /**
      * This is what happens if it's invalid
      *

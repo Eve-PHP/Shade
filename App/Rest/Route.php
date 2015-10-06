@@ -21,45 +21,21 @@ use Eve\Framework\Base;
  */
 class Route extends Base 
 {
+	const INSTANCE = 1;
+	
     const FAIL_401 = 'Invalid Request';
+	
+	public $routes = array();
     
-    public $routes = array(
-        '/rest/profile/search' => array(
-            'method' => 'GET',
-            'role' => 'public_profile',
-            'class' => '\\Eve\\App\\Rest\\Action\\Profile\\Search'
-        ),
-        '/rest/profile/detail/*' => array(
-            'method' => 'GET',
-            'role' => 'public_profile',
-            'class' => '\\Eve\\App\\Rest\\Action\\Profile\\Detail'
-        ),
-        '/rest/access' => array(
-            'method' => 'POST',
-            'role' => 'public_sso',
-            'class' => '\\Eve\\App\\Rest\\Action\\Access'
-        ),
-        '/rest/user/profile/detail' => array(
-            'method' => 'GET',
-            'role' => 'user_profile',
-            'class' => '\\Eve\\App\\Rest\\Action\\Profile\\Detail'
-        ),
-        '/rest/user/profile/update' => array(
-            'method' => 'PUT',
-            'role' => 'user_profile',
-            'class' => '\\Eve\\App\\Rest\\Action\\Profile\\Update'
-        ),
-        '/rest/profile/detail' => array(
-            'method' => 'GET',
-            'role' => 'personal_profile',
-            'class' => '\\Eve\\App\\Rest\\Action\\Profile\\Detail'
-        ),
-        '/rest/profile/update' => array(
-            'method' => 'PUT',
-            'role' => 'personal_profile',
-            'class' => '\\Eve\\App\\Rest\\Action\\Profile\\Update'
-        )
-    );
+	/**
+     * Include routes
+     *
+     * @return void
+     */
+	public function __construct()
+	{
+		$this->routes = include 'routes.php';
+	}
     
     /**
      * This is what happens if it's invalid

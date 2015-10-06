@@ -24,14 +24,19 @@ use Eve\App\Dialog\Action\Invalid;
 class Route extends Base 
 {
     const INSTANCE = 1;
+	
+	public $routes = array();
     
-    public $routes = array(
-        '*' => array(
-            'method' => 'ALL',
-            'class' => '\\Eve\\App\\Front\\Action\\Index'
-        )
-    );
-    
+	/**
+     * Include routes
+     *
+     * @return void
+     */
+	public function __construct()
+	{
+		$this->routes = include 'routes.php';
+	}
+	
     /**
      * Main route method
      *
