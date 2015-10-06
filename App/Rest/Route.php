@@ -46,6 +46,9 @@ class Route extends Base
      */
     public function fail($request, $response) 
     {
+		//set the header
+        $response->set('headers', 'Content-Type', 'text/json');
+		
         $response->set('body', json_encode(array( 
             'error' => true, 
             'message' => self::FAIL_401 ), 
@@ -73,6 +76,9 @@ class Route extends Base
                 
                 $variables = $self->getVariables($route, $path);
                 
+				//set the header
+        		$response->set('headers', 'Content-Type', 'text/json');
+				
                 //set the route
                 $request->set('route', $route);
                 
@@ -118,9 +124,6 @@ class Route extends Base
         
         //You can add validators here
         return function($request, $response) use ($self) {
-            //set the header
-            $response->set('headers', 'Content-Type', 'text/json');
-        
             //get the method
             $method = $request->get('method');
         
