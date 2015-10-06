@@ -15,12 +15,17 @@ class Eve_Model_Auth_Update_Test extends PHPUnit_Framework_TestCase
 	
     public function testProcess() 
 	{
+		$now = explode(" ", microtime());
+
 		$auth = eve()->registry()->get('test', 'auth');
 		
         $model = eve()->model('auth')->update()->process(array(
 			'auth_id' => $auth['auth_id'],
-			'auth_facebook_token' => '1234567890'));
+			'auth_slug' => 'TEST AUTH ' + $now[1],
+			'auth_permissions' => 'test_permissions_1,test_permissions_2',
+			'auth_password'	=> '123456',
+			'confirm' => '123456' ));
 
-		$this->assertEquals('1234567890', $model['auth_facebook_token']);
+		$this->assertEquals('test_permissions_1,test_permissions_2', $model['auth_permissions']);
     }
 }

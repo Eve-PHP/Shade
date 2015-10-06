@@ -82,14 +82,14 @@ class Update extends Html
         $data['app_id'] = $this->request->get('variables', 0);
         
         //was it not included in the url ?
-        if(!$data['app_id'] 
+        if(!isset($data['app_id']) 
         && isset($_SESSION['me']['app_id'])) {
             //get it from the session
             $data['app_id'] = $_SESSION['me']['app_id'];
         }
         
         //it's going to fail if we don't have the app_id
-        if(!$data['app_id']) {
+        if(!isset($data['app_id'])) {
             //we might as we an fail it now
             return $this->fail(
                 self::FAIL_404,

@@ -53,8 +53,8 @@ class Update extends Base
         }
         
         // profile_name - required
-        if(isset($data['profile_name'])
-        && empty($data['profile_name'])) {
+        if(!isset($data['profile_name'])
+        || empty($data['profile_name'])) {
             $errors['profile_name'] = self::INVALID_REQUIRED;
         }
         

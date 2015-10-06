@@ -27,7 +27,9 @@ class Eve_Job_App_Update_Test extends PHPUnit_Framework_TestCase
 			->job('app-update')
 			->setData(array(
 				'app_id' => $app['app_id'],
-				'app_name' => 'Test Job App Update'
+				'app_name' => 'Test Job App Update',
+				'app_domain' => '*.test.com',
+				'app_permissions' => 'public_sso,user_profile,global_profile', 
 			))
 			->run();
 		

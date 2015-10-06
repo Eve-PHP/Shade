@@ -57,17 +57,17 @@ class Update extends Base
         }
         
         //auth_slug        Required
-        if(isset($data['auth_slug']) 
-            && empty($data['auth_slug'])
+        if(!isset($data['auth_slug']) 
+            || empty($data['auth_slug'])
         ) {
             $errors['auth_slug'] = self::INVALID_EMPTY;
         }
         
         // auth_permissions        Required
-        if(isset($data['auth_permissions']) 
-            && empty($data['auth_permissions'])
+        if(!isset($data['auth_permissions']) 
+            || empty($data['auth_permissions'])
         ) {
-            $errors['auth_permissions'] = self::INVALID_SET;
+            $errors['auth_permissions'] = self::INVALID_REQUIRED;
         }
         
         //confirm            NOT IN SCHEMA

@@ -99,7 +99,7 @@ class Update extends Html
         //-----------------------//
         // 2. Validate
         //is it me ?
-        if($_SESSION['me']['profile_id'] !== $data['profile_id']) {
+        if($_SESSION['me']['profile_id'] != $data['profile_id']) {
             return $this->fail(
                 self::FAIL_401,
                 '/control/app/search');

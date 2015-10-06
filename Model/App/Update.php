@@ -53,21 +53,21 @@ class Update extends Base
         }
         
         // app_name - required
-        if(isset($data['app_name'])
-        && empty($data['app_name'])) {
-            $errors['app_name'] = self::INVALID_ID;
+        if(!isset($data['app_name'])
+        || empty($data['app_name'])) {
+            $errors['app_name'] = self::INVALID_REQUIRED;
         }
         
         // app_domain - required
-        if(isset($data['app_domain'])
-        && empty($data['app_domain'])) {
-            $errors['app_domain'] = self::INVALID_ID;
+        if(!isset($data['app_domain'])
+        || empty($data['app_domain'])) {
+            $errors['app_domain'] = self::INVALID_REQUIRED;
         }
         
         // app_permissions - required
-        if(isset($data['app_permissions'])
-        && empty($data['app_permissions'])) {
-            $errors['app_permissions'] = self::INVALID_ID;
+        if(!isset($data['app_permissions'])
+        || empty($data['app_permissions'])) {
+            $errors['app_permissions'] = self::INVALID_REQUIRED;
         }
         
         //OPTIONAL

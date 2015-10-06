@@ -29,7 +29,12 @@ class Eve_Job_Auth_Update_Test extends PHPUnit_Framework_TestCase
 			->setData(array(
 				'auth_id'		=> $auth['auth_id'],
 				'profile_id'	=> $profile['profile_id'],
-				'profile_name'	=> 'Test Job Auth Update'
+				'profile_email'		=> 'test456@test.com',
+				'profile_name'		=> 'Test Job Auth Update',
+				'auth_slug'			=> 'test456@test.com',
+				'auth_password'		=> '123',
+				'confirm'			=> '123',
+				'auth_permissions' 	=> 'user_profile,personal_profile,global_profile'
 			))
 			->run();
 		

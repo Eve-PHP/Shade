@@ -33,6 +33,7 @@ class Eve_Model_Profile_Set_Test extends PHPUnit_Framework_TestCase
         	->update()
         	->process(array(
 				'profile_id' => $set['profile_id'],
+				'profile_name' => 'Automated Test',
 				'profile_email' => 'test@test.com'));
 
 		$this->assertEquals($set['profile_id'], $model['profile_id']);
@@ -42,6 +43,7 @@ class Eve_Model_Profile_Set_Test extends PHPUnit_Framework_TestCase
 			->set()
 			->process(array(
 				'profile_id' => $set['profile_id'],
+				'profile_name' => 'Automated Test',
 				'profile_email'	=> 'test2@test.com' ));
 
 

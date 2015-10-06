@@ -22,8 +22,11 @@ class Eve_Model_App_Update_Test extends PHPUnit_Framework_TestCase
         	->update()
         	->process(array(
 				'app_id' => $app['app_id'],
-				'app_website' => 'http://example.com'));
+				'app_name' => 'Test App Updated',
+				'app_permissions'	=> 'test_permissions_1,test_permissions_2',
+				'app_domain'		=> '*.test.com' 
+				));
 
-		$this->assertEquals('http://example.com', $model['app_website']);
+		$this->assertEquals('Test App Updated', $model['app_name']);
     }
 }

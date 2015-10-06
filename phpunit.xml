@@ -55,7 +55,32 @@
       <file>test/Job/Profile/Update.php</file>
 	  
       <file>test/Job/Session/Request.php</file>
-      <file>test/Job/Session/Access.php</file><!---->
+      <file>test/Job/Session/Access.php</file>
+
+      <file>test/App/Back/Action/Logout.php</file>
+      <file>test/App/Back/Action/Create.php</file>
+      <file>test/App/Back/Action/Login.php</file>
+      <file>test/App/Back/Action/Update.php</file>
+
+      <file>test/App/Back/Action/App/Create.php</file>
+      <file>test/App/Back/Action/App/Search.php</file>
+      <file>test/App/Back/Action/App/Refresh.php</file>
+      <file>test/App/Back/Action/App/Update.php</file>
+      <file>test/App/Back/Action/App/Remove.php</file>
+      <file>test/App/Back/Action/App/Restore.php</file>
+
+      <file>test/App/Back/Action/Profile/Update.php</file>
+
+      <file>test/App/Dialog/Action/Create.php</file>
+      <file>test/App/Dialog/Action/Login.php</file>
+      <file>test/App/Dialog/Action/Invalid.php</file>
+      <file>test/App/Dialog/Action/Request.php</file>
+      <file>test/App/Dialog/Action/Update.php</file>
+      
+      <file>test/App/Rest/Action/Access.php</file>
+      <file>test/App/Rest/Action/Profile/Search.php</file>
+      <file>test/App/Rest/Action/Profile/Detail.php</file>
+      <file>test/App/Rest/Action/Profile/Update.php</file>
     </testsuite>
   </testsuites>
 
