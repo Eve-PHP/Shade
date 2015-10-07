@@ -99,7 +99,17 @@ class Route extends Base
         }
         
         //You can add validators here
-        return function($request, $response) use ($self) {};    
+        return function($request, $response) use ($self) {
+			$path = $request->get('path', 'string');
+			if(strpos($path, '/control') === 0 
+				&& !in_array($path, array(
+					'/control/login',
+					'/control/create'
+				)) && !isset($_SESSION['me'])
+			) {
+				eve()->redirect('/control/login');
+			}
+		};    
     }
     
     /**
