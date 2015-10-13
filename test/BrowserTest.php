@@ -8,6 +8,7 @@
 class BrowserTest extends Eden\Core\Base
 {
     public function __construct() {
+		$_SERVER['HTTP_HOST'] = 'localhost';
         $this->request = eve()->getRequest();
         $this->response = eve()->getResponse();
     }
@@ -18,7 +19,7 @@ class BrowserTest extends Eden\Core\Base
         $str = array_map('ucfirst', explode('/', $path));
         $path = implode('\\', $str);
         // Set Class
-        $class = '\Eve\App' . $path;
+        $class = 'Eve\App' . $path;
         return new $class();
     }
 
