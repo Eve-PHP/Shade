@@ -8,9 +8,9 @@
 class BrowserScaffold extends PHPUnit_Extensions_Selenium2TestCase 
 {
     protected function setUp() 
-	{
-		$test = eve()->settings('test');
-		
+    {
+        $test = eve()->settings('test');
+        
         $this->setBrowser('phantomjs');
         $this->setBrowserUrl($test['host']);
     }

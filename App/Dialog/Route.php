@@ -15,38 +15,52 @@ use Eve\Framework\Base;
 use Eve\App\Dialog\Action\Invalid;
 
 /**
- * Validates dialog requests 
+ * Validates Dialog requests 
  *
- * @vendor Openovate
- * @package Framework
- * @author Christian Blanquera cblanquera@openovate.com
+ * @vendor   Custom
+ * @package  Project
+ * @author   Christian Blanquera <cblanquera@openovate.com>
+ * @standard PSR-2
  */
 class Route extends Base 
 {
+    /**
+     * @const int INSTANCE Flag that designates singleton when using ::i()
+     */
     const INSTANCE = 1;
-	
+
+    /**
+     * @const string FAIL_401 Error template
+     */
     const FAIL_401 = 'Invalid Request';
     
-	public static $roles = array();
+    /**
+     * @var array $roles List of roles and permissions
+     */
+    public static $roles = array();
     
+    /**
+     * @var array $routes List of route patterns
+     */
     public $routes = array();
     
-	/**
+    /**
      * Include routes
      *
      * @return void
      */
-	public function __construct()
-	{
-		$this->routes = include 'routes.php';
-		self::$roles = include 'roles.php';
-	}
-	
+    public function __construct()
+    {
+        $this->routes = include 'routes.php';
+        self::$roles = include 'roles.php';
+    }
+    
     /**
      * This is what happens if it's invalid
      *
-     * @param Eden\Registry\Index
-     * @param Eden\Registry\Index
+     * @param *Eden\Registry\Index $request  The request object
+     * @param *Eden\Registry\Index $response The response object
+     *
      * @return false
      */
     public function fail($request, $response) 
@@ -194,7 +208,8 @@ class Route extends Base
     /**
      * Loops through routes trying to find the right one
      *
-     * @param Eden\Registry\Index
+     * @param Eden\Registry\Index $request The request object
+     *
      * @return array
      */
     public function getRoute($request) 
@@ -225,11 +240,12 @@ class Route extends Base
     /**
      * Checks permissions via database
      *
-     * @param Eden\Registry\Index
-     * @param Eden\Registry\Index
-     * @param string
-     * @param string
-     * @return array
+     * @param *Eden\Registry\Index $request  The request object
+     * @param *Eden\Registry\Index $response The response object
+     * @param *string              $token    Access or client token
+     * @param *string              $role     The role to test against
+     *
+     * @return string|void
      */
     public function validateGlobal(
         $request, 
@@ -274,11 +290,12 @@ class Route extends Base
     /**
      * Checks permissions via database
      *
-     * @param Eden\Registry\Index
-     * @param Eden\Registry\Index
-     * @param string
-     * @param string
-     * @return array
+     * @param *Eden\Registry\Index $request  The request object
+     * @param *Eden\Registry\Index $response The response object
+     * @param *string              $token    Access or client token
+     * @param *string              $role     The role to test against
+     *
+     * @return string|void
      */
     public function validateUser(
         $request, 
@@ -336,6 +353,9 @@ class Route extends Base
     /**
      * Returns a dynamic list of variables
      * based on the given pattern and path
+     *
+     * @param string $route The route pattern
+     * @param string $path  The URL path to test against
      *
      * @return array
      */

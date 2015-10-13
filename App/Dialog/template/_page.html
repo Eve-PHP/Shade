@@ -14,16 +14,16 @@
         <link rel="stylesheet" type="text/css" href="{{root}}/bower_components/eve-open-sans/open-sans.css" />
         <link rel="stylesheet" type="text/css" href="{{root}}/bower_components/eve-bootstrap/bootstrap.css" />
         <link rel="stylesheet" type="text/css" href="{{root}}/bower_components/eve-open-sans/open-sans.css" />
-        <link rel="stylesheet" type="text/css" href="{{root}}/custom.css" />
+        <link rel="stylesheet" type="text/css" href="{{root}}/back/custom.css" />
         
         <script type="text/javascript" src="{{root}}/bower_components/eve-jquery/jquery.js"></script>
         <script type="text/javascript" src="{{root}}/bower_components/eve-bootstrap/bootstrap.js"></script>
-        <script type="text/javascript" src="{{root}}/custom.js"></script>
+        <script type="text/javascript" src="{{root}}/back/custom.js"></script>
     </head>
 
     <body>
         <div class="container">
-            <header>{{> _head}}</header>
+            <header>{{{partial '_head'}}}</header>
             
             {{#if flash.message}}
             <div class="clear alert alert-{{flash.type}}">{{flash.message}}</div>
@@ -31,7 +31,7 @@
             
             <section class="body">{{{body}}}</section>
             
-            <header>{{> _foot}}</header>
+            <header>{{{partial '_foot'}}}</header>
         </div>
     </body>
 </html>

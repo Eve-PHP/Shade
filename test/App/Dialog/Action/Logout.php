@@ -8,17 +8,17 @@
 class ApiAppDialogActionLogoutTest extends PHPUnit_Framework_TestCase
 {
     public function testRender()
-	{
-		$_GET = array(
-			'client_id' => $app['app_token'],
-			'redirect_uri' => '/control/app/search'
-			);
+    {
+        $_GET = array(
+            'client_id' => $app['app_token'],
+            'redirect_uri' => '/control/app/search'
+            );
 
-		$results = BrowserTest::i()->setPath('/dialog/action/logout')
-			->setGet($_GET)
-			->setIsTriggered(true)
-			->process();
-			
-		$this->assertTrue($results['triggered']);
-	}
+        $results = BrowserTest::i()->setPath('/dialog/action/logout')
+            ->setGet($_GET)
+            ->setIsTriggered(true)
+            ->process();
+            
+        $this->assertTrue($results['triggered']);
+    }
 }

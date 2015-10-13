@@ -1,6 +1,6 @@
 <?php //-->
-/*
- * A Custom Library
+/**
+ * A Custom Project
  *
  * Copyright and license information can be found at LICENSE
  * distributed with this package.
@@ -64,15 +64,24 @@ use Eve\Framework\Action\Json;
  */
 class Update extends Json 
 {
-    const FAIL_406 = 'Invalid Data';
+    /**
+     * @const string FAIL_401 Error template
+     */
     const FAIL_401 = 'Invalid Permissions';
+
+    /**
+     * @const string FAIL_404 Error template
+     */
     const FAIL_404 = 'Not Found';
+
+    /**
+     * @const string FAIL_406 Error template
+     */
+    const FAIL_406 = 'Invalid Data';
 
     /**
      * Main action call
      *
-     * @param $request Eden\Registry\Index the request object
-     * @param $response Eden\Registry\Index the response object
      * @return string|null|void
      */
     public function render() 

@@ -8,12 +8,12 @@
 class ApiAppBackActionAppSearchTest extends PHPUnit_Framework_TestCase
 {
     public function testRender()
-	{
-		$results = BrowserTest::i()->setPath('/back/action/app/search')
-			->setMethod('GET')
-			->setIsTriggered(false)
-			->process();
-			
-		$this->assertContains('Search', $results['data']);
-	}
+    {
+        $results = BrowserTest::i()->setPath('/back/action/app/search')
+            ->setMethod('GET')
+            ->setIsTriggered(false)
+            ->process();
+            
+        $this->assertContains('Search', $results['data']);
+    }
 }

@@ -8,22 +8,22 @@
 class Eve_Model_Session_Logout_Test extends PHPUnit_Framework_TestCase
 {
     public function testErrors() 
-	{
+    {
         $errors = eve()->model('session')->logout()->errors();
-		
-		$this->assertEquals('Cannot be empty', $errors['auth_id']);
+        
+        $this->assertEquals('Cannot be empty', $errors['auth_id']);
     }
-	
+    
     public function testProcess() 
-	{
-		$auth = eve()->registry()->get('test', 'auth');
+    {
+        $auth = eve()->registry()->get('test', 'auth');
 
-		$model = eve()
-        	->model('session')
-        	->logout()
-        	->process(array(
-				'auth_id' => $auth['auth_id']));
+        $model = eve()
+            ->model('session')
+            ->logout()
+            ->process(array(
+                'auth_id' => $auth['auth_id']));
 
-		$this->assertTrue(is_array($model->get()));
-	}
+        $this->assertTrue(is_array($model->get()));
+    }
 }

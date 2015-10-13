@@ -1,6 +1,6 @@
 <?php //-->
-/*
- * A Custom Library
+/**
+ * A Custom Project
  *
  * Copyright and license information can be found at LICENSE
  * distributed with this package.
@@ -31,6 +31,11 @@ use Eve\Framework\Job\Exception;
  *
  * -- $this->data - Provides all raw data
  *    originally passed into the job
+ *
+ * @vendor   Custom
+ * @package  Project
+ * @author   Christian Blanquera <cblanquera@openovate.com>
+ * @standard PSR-2
  */
 class Create extends Base 
 {

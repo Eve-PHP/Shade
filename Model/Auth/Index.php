@@ -1,6 +1,6 @@
 <?php //-->
-/*
- * A Custom Library
+/**
+ * A Custom Project
  *
  * Copyright and license information can be found at LICENSE
  * distributed with this package.
@@ -29,13 +29,18 @@ use Eve\Framework\Model\Exception;
  *    from the settings path. ie. settings/foo.php
  *
  *    -- eve()->registry() - Returns Eden\Registry\Index used globally
+ *
+ * @vendor   Custom
+ * @package  Project
+ * @author   Christian Blanquera <cblanquera@openovate.com>
+ * @standard PSR-2
  */
 class Index extends Base
 {
     /**
      * Factory for create
      *
-     * @return this
+     * @return Eve\Model\Auth\Index
      */
     public function create()
     {
@@ -45,7 +50,8 @@ class Index extends Base
     /**
      * Checks to see if slug exists
      *
-     * @param string slug
+     * @param *string $slug The auth slug
+     *
      * @param bool
      */
     public function exists($slug) 
@@ -65,8 +71,9 @@ class Index extends Base
     /**
      * Link auth to Profile
      *
-     * @param int auth id
-     * @param int profile id
+     * @param *int $authId    auth id
+     * @param *int $profileId profile id
+     *
      * @return Eden\Mysql\Model
      */
     public function linkProfile($authId, $profileId) 
@@ -109,8 +116,9 @@ class Index extends Base
     /**
      * Unlink auth to Profile
      *
-     * @param int auth id
-     * @param int profile id
+     * @param *int $authId    auth id
+     * @param *int $profileId profile id
+     *
      * @return Eden\Mysql\Model
      */
     public function unlinkProfile($authId, $profileId) 

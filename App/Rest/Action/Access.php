@@ -1,6 +1,6 @@
 <?php //-->
-/*
- * A Custom Library
+/**
+ * A Custom Project
  *
  * Copyright and license information can be found at LICENSE
  * distributed with this package.
@@ -57,9 +57,19 @@ use Eve\Framework\Action\Html;
  *       header item to 'Foo' given that no value is present
  *       QUIRK: $this->response->set('headers', 'Foo') will erase
  *       all existing headers
+ *
+ * @vendor   Custom
+ * @package  Project
+ * @author   Christian Blanquera <cblanquera@openovate.com>
+ * @standard PSR-2
  */
 class Access extends Json
 {
+    /**
+     * Main action call
+     *
+     * @return string|null|void
+     */
     public function render() 
     {
         //-----------------------//

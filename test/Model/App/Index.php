@@ -7,115 +7,115 @@
  */
 class Eve_Model_App_Index_Test extends PHPUnit_Framework_TestCase
 {
-	public function testCreate()
-	{
-		$class = eve()->model('app')->create();
-		$this->assertInstanceOf('Eve\\Model\\App\\Create', $class);
-	}
-	
-	public function testDetail()
-	{
-		$class = eve()->model('app')->detail();
-		$this->assertInstanceOf('Eve\\Model\\App\\Detail', $class);
-	}
-	
-	public function testRefresh()
-	{
-		$class = eve()->model('app')->refresh();
-		$this->assertInstanceOf('Eve\\Model\\App\\Refresh', $class);
-	}
-	
-	public function testRemove()
-	{
-		$class = eve()->model('app')->remove();
-		$this->assertInstanceOf('Eve\\Model\\App\\Remove', $class);
-	}
-	
-	public function testRestore()
-	{
-		$class = eve()->model('app')->restore();
-		$this->assertInstanceOf('Eve\\Model\\App\\Restore', $class);
-	}
-	
-	public function testSearch()
-	{
-		$class = eve()->model('app')->search();
-		$this->assertInstanceOf('Eve\\Model\\App\\Search', $class);
-	}
-	
-	public function testUpdate()
-	{
-		$class = eve()->model('app')->update();
-		$this->assertInstanceOf('Eve\\Model\\App\\Update', $class);
-	}
-	
-    public function testLinkProfile() 
-	{
-		$app = eve()->registry()->get('test', 'app');
-		
-		//link
-		$model = eve()
-			->model('app')
-			->linkProfile(
-				$app['app_id'],
-				400);
-		
-		//test
-		$this->assertEquals(
-			$app['app_id'],
-			$model['app_profile_app']);
-
-		$this->assertEquals(
-			400,
-			$model['app_profile_profile']);
+    public function testCreate()
+    {
+        $class = eve()->model('app')->create();
+        $this->assertInstanceOf('Eve\\Model\\App\\Create', $class);
     }
-	
-    public function testGetProfileByToken() 
-	{	
-		$config = eve()->settings('test');
-		
-		$profile = eve()
-			->model('app')
-			->getProfileByToken($config['app_token']);
+    
+    public function testDetail()
+    {
+        $class = eve()->model('app')->detail();
+        $this->assertInstanceOf('Eve\\Model\\App\\Detail', $class);
+    }
+    
+    public function testRefresh()
+    {
+        $class = eve()->model('app')->refresh();
+        $this->assertInstanceOf('Eve\\Model\\App\\Refresh', $class);
+    }
+    
+    public function testRemove()
+    {
+        $class = eve()->model('app')->remove();
+        $this->assertInstanceOf('Eve\\Model\\App\\Remove', $class);
+    }
+    
+    public function testRestore()
+    {
+        $class = eve()->model('app')->restore();
+        $this->assertInstanceOf('Eve\\Model\\App\\Restore', $class);
+    }
+    
+    public function testSearch()
+    {
+        $class = eve()->model('app')->search();
+        $this->assertInstanceOf('Eve\\Model\\App\\Search', $class);
+    }
+    
+    public function testUpdate()
+    {
+        $class = eve()->model('app')->update();
+        $this->assertInstanceOf('Eve\\Model\\App\\Update', $class);
+    }
+    
+    public function testLinkProfile() 
+    {
+        $app = eve()->registry()->get('test', 'app');
+        
+        //link
+        $model = eve()
+            ->model('app')
+            ->linkProfile(
+                $app['app_id'],
+                400);
+        
+        //test
+        $this->assertEquals(
+            $app['app_id'],
+            $model['app_profile_app']);
 
-		$this->assertEquals('Admin', $profile['profile_name']);
+        $this->assertEquals(
+            400,
+            $model['app_profile_profile']);
+    }
+    
+    public function testGetProfileByToken() 
+    {    
+        $config = eve()->settings('test');
+        
+        $profile = eve()
+            ->model('app')
+            ->getProfileByToken($config['app_token']);
+
+        $this->assertEquals('Admin', $profile['profile_name']);
     }
 
     public function testPermissions() 
-    {	
-    	$app = eve()->registry()->get('test', 'app');
+    {    
+        $app = eve()->registry()->get('test', 'app');
 
-		$yes = eve()
-			->model('app')
-			->permissions(
-				$app['app_id'], 
-				400);
-		
-		$this->assertTrue($yes);
+        $yes = eve()
+            ->model('app')
+            ->permissions(
+                $app['app_id'], 
+                400);
+        
+        $this->assertTrue($yes);
 
-		$yes = eve()
-			->model('app')
-			->permissions($app['app_id'], 222);
+        $yes = eve()
+            ->model('app')
+            ->permissions($app['app_id'], 222);
 
-		$this->assertFalse($yes);
+        $this->assertFalse($yes);
     }
 
     public function testUnlinkProfile() 
     {
-    	$app = eve()->registry()->get('test', 'app');
-    	
-		$model = eve()
-			->model('app')
-			->unlinkProfile(
-				$app['app_id'],
-				400);
-		
-		$this->assertEquals(
-			$app['app_id'],
-			$model['app_profile_app']);
+        $app = eve()->registry()->get('test', 'app');
+        
+        $model = eve()
+            ->model('app')
+            ->unlinkProfile(
+                $app['app_id'],
+                400);
+        
+        $this->assertEquals(
+            $app['app_id'],
+            $model['app_profile_app']);
 
-		$this->assertEquals(
-			400,
-			$model['app_profile_profile']);
+        $this->assertEquals(
+            400,
+            $model['app_profile_profile']);
     }
 }

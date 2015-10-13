@@ -1,6 +1,6 @@
 <?php //-->
-/*
- * A Custom Library
+/**
+ * A Custom Project
  *
  * Copyright and license information can be found at LICENSE
  * distributed with this package.
@@ -29,6 +29,11 @@ use Eve\Framework\Model\Exception;
  *    from the settings path. ie. settings/foo.php
  *
  *    -- eve()->registry() - Returns Eden\Registry\Index used globally
+ *
+ * @vendor   Custom
+ * @package  Project
+ * @author   Christian Blanquera <cblanquera@openovate.com>
+ * @standard PSR-2
  */
 class Index extends Base
 {
@@ -46,7 +51,8 @@ class Index extends Base
      * Get profile by access token
      * Random function needed...
      *
-     * @param string
+     * @param *string $token App client token
+     *
      * @return array
      */
     public function getProfileByToken($token) 
@@ -72,7 +78,8 @@ class Index extends Base
      * Get profile by access token
      * Random function needed...
      *
-     * @param string
+     * @param *string $token App client token
+     *
      * @return array
      */
     public function getAppByToken($token) 

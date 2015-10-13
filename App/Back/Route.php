@@ -17,25 +17,32 @@ use Eve\App\Dialog\Action\Invalid;
 /**
  * Validates dialog requests 
  *
- * @vendor Openovate
- * @package Framework
- * @author Christian Blanquera cblanquera@openovate.com
+ * @vendor   Custom
+ * @package  Project
+ * @author   Christian Blanquera <cblanquera@openovate.com>
+ * @standard PSR-2
  */
 class Route extends Base 
 {
+    /**
+     * @const int INSTANCE Flag that designates singleton when using ::i()
+     */
     const INSTANCE = 1;
-	
+    
+    /**
+     * @var array $routes List of route patterns
+     */
     public $routes = array();
     
-	/**
+    /**
      * Include routes
      *
      * @return void
      */
-	public function __construct()
-	{
-		$this->routes = include 'routes.php';
-	}
+    public function __construct()
+    {
+        $this->routes = include 'routes.php';
+    }
     
     /**
      * Main route method
@@ -100,21 +107,24 @@ class Route extends Base
         
         //You can add validators here
         return function($request, $response) use ($self) {
-			$path = $request->get('path', 'string');
-			if(strpos($path, '/control') === 0 
-				&& !in_array($path, array(
-					'/control/login',
-					'/control/create'
-				)) && !isset($_SESSION['me'])
-			) {
-				eve()->redirect('/control/login');
-			}
-		};    
+            $path = $request->get('path', 'string');
+            if(strpos($path, '/control') === 0 
+                && !in_array($path, array(
+                    '/control/login',
+                    '/control/create'
+                )) && !isset($_SESSION['me'])
+            ) {
+                eve()->redirect('/control/login');
+            }
+        };    
     }
     
     /**
      * Returns a dynamic list of variables
      * based on the given pattern and path
+     *
+     * @param string $route The route pattern
+     * @param string $path  The URL path to test against
      *
      * @return array
      */

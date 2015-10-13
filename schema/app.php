@@ -1,58 +1,58 @@
 <?php //-->
 return array(
-	'singular' 	=> 'App',	//for pages and messages
-    'plural' 	=> 'Apps',	//for pages and messages
-	'url'	=> '/control',		//root URL for pages
-	'paths'	=> array(
-		'rest' => '/App/Rest/Action',		//default path for rest actions
-		'page' => '/App/Back/Action',		//default path for page actions
-		'model' => '/Model',				//default path for models
-		'job' => '/Job',					//default path for jobs
-		'template' => '/App/Back/template',	//default path for templates
-	),
-	'page' => array(
-		'create',		//add a App/Create Action 
-		'update',		//add a App/Update Action 
-		'remove',		//add a App/Remove Action 
-		'restore',		//add a App/Restore Action 
-		'search',		//add a App/Search Action 
-	), 				
-	'model' => array(
-		'create',		//add a App/Create Model 
-		'update',		//add a App/Update Model
-		'remove',		//add a App/Remove Model
-		'restore',		//add a App/Restore Model
-		'search',		//add a App/Search Model
-		'detail',		//add a App/Detail Model
-		'index',		//add a App/Index Model
-	),			
-	'permissions' => 'profile',	//session or source must have a linked profile_id
-	'relations' => array(
-		'profile' => false,
-	),
-	'job'	=> array(			//Jobs can be created with the following instructions
-		'create' => array(		//add a App/Create Job
-			array('create'	, 'app'),		//- create app
-			array('link'	, 'profile'),	//- link profile
-		),
-			
-		'update' => array(		//add a App/Update Job
-			array('update'	, 'app'),	//- update app
-		),
-		
-		'remove' => array(		//add a App/Remove Job
-			array('remove'	, 'app')	//- remove app
-		),
-		
-		'restore' => array(		//add a App/Restore Job
-			array('restore'	, 'app')	//- restore app
-		),
-		
-		'refresh' => array(		//add a App/Refresh Job
-			array('refresh'	, 'app')	//- refresh app
-		)
-	),
-	'fields' => array(
+    'singular'     => 'App',    //for pages and messages
+    'plural'     => 'Apps',    //for pages and messages
+    'url'    => '/control',        //root URL for pages
+    'paths'    => array(
+        'rest' => '/App/Rest/Action',        //default path for rest actions
+        'page' => '/App/Back/Action',        //default path for page actions
+        'model' => '/Model',                //default path for models
+        'job' => '/Job',                    //default path for jobs
+        'template' => '/App/Back/template',    //default path for templates
+    ),
+    'page' => array(
+        'create',        //add a App/Create Action 
+        'update',        //add a App/Update Action 
+        'remove',        //add a App/Remove Action 
+        'restore',        //add a App/Restore Action 
+        'search',        //add a App/Search Action 
+    ),                 
+    'model' => array(
+        'create',        //add a App/Create Model 
+        'update',        //add a App/Update Model
+        'remove',        //add a App/Remove Model
+        'restore',        //add a App/Restore Model
+        'search',        //add a App/Search Model
+        'detail',        //add a App/Detail Model
+        'index',        //add a App/Index Model
+    ),            
+    'permissions' => 'profile',    //session or source must have a linked profile_id
+    'relations' => array(
+        'profile' => false,
+    ),
+    'job'    => array(            //Jobs can be created with the following instructions
+        'create' => array(        //add a App/Create Job
+            array('create'    , 'app'),        //- create app
+            array('link'    , 'profile'),    //- link profile
+        ),
+            
+        'update' => array(        //add a App/Update Job
+            array('update'    , 'app'),    //- update app
+        ),
+        
+        'remove' => array(        //add a App/Remove Job
+            array('remove'    , 'app')    //- remove app
+        ),
+        
+        'restore' => array(        //add a App/Restore Job
+            array('restore'    , 'app')    //- restore app
+        ),
+        
+        'refresh' => array(        //add a App/Refresh Job
+            array('refresh'    , 'app')    //- refresh app
+        )
+    ),
+    'fields' => array(
         'app_name' => array(
             'label' => 'Name',
             'type' => 'string',
@@ -60,71 +60,71 @@ return array(
             'holder' => 'Openovate Labs App',
             'valid' => 'required', 
             'search' => true,
-			'show' => true
+            'show' => true
         ),
-		'app_domain' => array(
+        'app_domain' => array(
             'label' => 'Domain',
             'type' => 'string',
             'field' => 'text',
             'holder' => '*.openovate.com',
             'valid' => 'required'
         ),
-		'app_website' => array(
+        'app_website' => array(
             'label' => 'Domain',
             'type' => 'string',
             'field' => 'text',
             'holder' => 'http://openovate.com/',
-			'valid' => 'url',
+            'valid' => 'url',
             'search' => true,
-			'show' => true
+            'show' => true
         ),
-		'app_permissions' => array(
+        'app_permissions' => array(
             'label' => 'Permissions',
             'type' => 'string',
             'field' => 'checkbox',
             'valid' => 'required',
-			'options' => array(
-				array(
-					'value' => 'public_profile',
-					'label' => 'Public profiles',
-            		'description' => 'Get profile detail'
-				),
-				array(
-					'value' => 'public_sso',
-					'label' => 'Single Sign On',
-            		'description' => 'Use our Single Sign On'
-				),
-				array(
-					'value' => 'personal_profile',
-					'label' => 'Personal profile',
-            		'description' => 'Access to your personal profile'
-				),
-				array(
-					'value' => 'user_profile',
-					'label' => 'User Profiles',
-            		'description' => 'Access to others personal profile'
-				),
-				array(
-					'value' => 'global_profile',
-					'label' => 'Global Profiles',
-            		'description' => 'Access to others profile with no permissions'
-				)
-			) 
+            'options' => array(
+                array(
+                    'value' => 'public_profile',
+                    'label' => 'Public profiles',
+                    'description' => 'Get profile detail'
+                ),
+                array(
+                    'value' => 'public_sso',
+                    'label' => 'Single Sign On',
+                    'description' => 'Use our Single Sign On'
+                ),
+                array(
+                    'value' => 'personal_profile',
+                    'label' => 'Personal profile',
+                    'description' => 'Access to your personal profile'
+                ),
+                array(
+                    'value' => 'user_profile',
+                    'label' => 'User Profiles',
+                    'description' => 'Access to others personal profile'
+                ),
+                array(
+                    'value' => 'global_profile',
+                    'label' => 'Global Profiles',
+                    'description' => 'Access to others profile with no permissions'
+                )
+            ) 
         ),
-		'app_token' => array(
+        'app_token' => array(
             'label' => 'Token',
             'type' => 'string',
             'field' => false,
-			'encoding' => 'uuid',
-			'show' => true
+            'encoding' => 'uuid',
+            'show' => true
         ),
-		'app_secret' => array(
+        'app_secret' => array(
             'label' => 'Secret',
             'type' => 'string',
             'field' => false,
-			'encoding' => 'uuid',
-			'show' => true
+            'encoding' => 'uuid',
+            'show' => true
         )
     ),
-	'fixture'  => array()
+    'fixture'  => array()
 );

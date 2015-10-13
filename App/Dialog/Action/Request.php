@@ -1,6 +1,6 @@
 <?php //-->
-/*
- * A Custom Library
+/**
+ * A Custom Project
  *
  * Copyright and license information can be found at LICENSE
  * distributed with this package.
@@ -59,15 +59,39 @@ use Eve\App\Dialog\Route;
  *       header item to 'Foo' given that no value is present
  *       QUIRK: $this->response->set('headers', 'Foo') will erase
  *       all existing headers
+ *
+ * @vendor   Custom
+ * @package  Project
+ * @author   Christian Blanquera <cblanquera@openovate.com>
+ * @standard PSR-2
  */
 class Request extends Html
 {
+    /**
+     * @const string FAIL_400 Error template
+     */
     const FAIL_400 = 'Failed to create session.';
+
+    /**
+     * @const string FAIL_406 Error template
+     */
     const FAIL_406 = 'There are some errors on the form.';
 
-    protected $title = 'Requesting Access';
+    /**
+     * @var string $layout The overall layout template
+     */
     protected $layout = '_blank';
 
+    /**
+     * @var string $title Page title
+     */
+    protected $title = 'Requesting Access';
+
+    /**
+     * Main action call
+     *
+     * @return string|null|void
+     */
     public function render() 
     {
         $data = array('app' => $this->request->get('source'));
@@ -155,12 +179,10 @@ class Request extends Html
         return $this->success();
     }
 
-    /* Methods
-    -------------------------------*/
     /**
      * When the form is submitted
      *
-     * @return void
+     * @return string|null|void
      */
     protected function check() 
     {
@@ -208,7 +230,8 @@ class Request extends Html
     /**
      * Creates a redirect url
      *
-     * @param object extra parameters
+     * @param array $query Extra parameters
+     *
      * @return string
      */
     protected function redirect(array $query = array()) 

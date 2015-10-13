@@ -8,25 +8,25 @@
 class Eve_Model_Auth_Restore_Test extends PHPUnit_Framework_TestCase
 {
     public function testErrors() 
-	{
+    {
         $errors = eve()
-			->model('auth')
-			->restore()
-			->errors();
-			
-		$this->assertEquals('Cannot be empty', $errors['auth_id']);
+            ->model('auth')
+            ->restore()
+            ->errors();
+            
+        $this->assertEquals('Cannot be empty', $errors['auth_id']);
     }
-	
+    
     public function testProcess() 
-	{
-		$auth = eve()->registry()->get('test', 'auth');
+    {
+        $auth = eve()->registry()->get('test', 'auth');
 
         $row = eve()
-        	->model('auth')
-        	->restore()
-        	->process(array( 
-				'auth_id' => $auth['auth_id'] ));
+            ->model('auth')
+            ->restore()
+            ->process(array( 
+                'auth_id' => $auth['auth_id'] ));
 
-		$this->assertEquals(1, $row['auth_active']);
+        $this->assertEquals(1, $row['auth_active']);
     }
 }

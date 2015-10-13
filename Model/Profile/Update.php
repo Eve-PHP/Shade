@@ -1,6 +1,6 @@
 <?php //-->
-/*
- * A Custom Library
+/**
+ * A Custom Project
  *
  * Copyright and license information can be found at LICENSE
  * distributed with this package.
@@ -29,14 +29,20 @@ use Eve\Framework\Model\Exception;
  *    from the settings path. ie. settings/foo.php
  *
  *    -- eve()->registry() - Returns Eden\Registry\Index used globally
+ *
+ * @vendor   Custom
+ * @package  Project
+ * @author   Christian Blanquera <cblanquera@openovate.com>
+ * @standard PSR-2
  */
 class Update extends Base
 {
     /**
      * Returns errors if any
      *
-     * @param array submitted data
-     * @param array existing errors
+     * @param array $data   The item before processing
+     * @param array $errors Existing errors
+     *
      * @return array error
      */
     public function errors(array $data = array(), array $errors = array()) 
@@ -123,7 +129,8 @@ class Update extends Base
     /**
      * Processes the form
      *
-     * @param array data
+     * @param array $data The item to process
+     *
      * @return mixed
      */
     public function process(array $data = array()) 

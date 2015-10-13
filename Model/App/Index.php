@@ -1,6 +1,6 @@
 <?php //-->
-/*
- * A Custom Library
+/**
+ * A Custom Project
  *
  * Copyright and license information can be found at LICENSE
  * distributed with this package.
@@ -29,6 +29,11 @@ use Eve\Framework\Model\Exception;
  *    from the settings path. ie. settings/foo.php
  *
  *    -- eve()->registry() - Returns Eden\Registry\Index used globally
+ *
+ * @vendor   Custom
+ * @package  Project
+ * @author   Christian Blanquera <cblanquera@openovate.com>
+ * @standard PSR-2
  */
 class Index extends Base
 {
@@ -56,7 +61,8 @@ class Index extends Base
      * Get profile by app access token
      * Random function needed...
      *
-     * @param string
+     * @param *string $token App client token
+     *
      * @return array
      */
     public function getProfileByToken($token) 
@@ -83,8 +89,8 @@ class Index extends Base
     /**
      * Link app to profile
      *
-     * @param int app id
-     * @param int profile id
+     * @param *int $addId     app id
+     * @param *int $profileId profile id
      * @return Eden\Mysql\Model
      */
     public function linkProfile($appId, $profileId) 
@@ -108,8 +114,9 @@ class Index extends Base
     /**
      * Check for app permissions
      * 
-     * @param int app id
-     * @param int profile id
+     * @param *int $addId     app id
+     * @param *int $profileId profile id
+     * 
      * @return bool
      */
     public function permissions($appId, $profileId) 
@@ -173,9 +180,10 @@ class Index extends Base
     
     /**
      * Unlink app to profile
-     *
-     * @param int app id
-     * @param int profile id
+     * 
+     * @param *int $addId     app id
+     * @param *int $profileId profile id
+     * 
      * @return Eden\Mysql\Model
      */
     public function unlinkProfile($appId, $profileId) 

@@ -7,14 +7,14 @@
  */
 class ApiAppDialogActionInvalidTest extends PHPUnit_Framework_TestCase
 {
-	public function testRender()
-	{
-		$results = BrowserTest::i()
-			->setPath('/dialog/action/invalid')
-			->setMethod('GET')
-			->setIsTriggered(true)
-			->process();
+    public function testRender()
+    {
+        $results = BrowserTest::i()
+            ->setPath('/dialog/action/invalid')
+            ->setMethod('GET')
+            ->setIsTriggered(true)
+            ->process();
 
-		$this->assertContains('Invalid Request', $results['data']);
-	}
+        $this->assertContains('Invalid Request', $results['data']);
+    }
 }

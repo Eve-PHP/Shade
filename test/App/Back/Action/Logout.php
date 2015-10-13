@@ -8,12 +8,12 @@
 class ApiAppBackActionLogoutTest extends PHPUnit_Framework_TestCase
 {
     public function testRender()
-	{
-		$results = BrowserTest::i()->setPath('/back/action/logout')
-			->setMethod('GET')
-			->setIsTriggered(true)
-			->process();
+    {
+        $results = BrowserTest::i()->setPath('/back/action/logout')
+            ->setMethod('GET')
+            ->setIsTriggered(true)
+            ->process();
 
-		$this->assertTrue($results['triggered']);
-	}
+        $this->assertTrue($results['triggered']);
+    }
 }

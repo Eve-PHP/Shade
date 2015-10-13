@@ -8,25 +8,25 @@
 class Eve_Model_App_Remove_Test extends PHPUnit_Framework_TestCase
 {
     public function testErrors() 
-	{
+    {
         $errors = eve()
-			->model('app')
-			->remove()
-			->errors();
-			
-		$this->assertEquals('Cannot be empty', $errors['app_id']);
+            ->model('app')
+            ->remove()
+            ->errors();
+            
+        $this->assertEquals('Cannot be empty', $errors['app_id']);
     }
-	
+    
     public function testProcess() 
-	{
-		$app = eve()->registry()->get('test', 'app');
+    {
+        $app = eve()->registry()->get('test', 'app');
 
         $row = eve()
-        	->model('app')
-        	->remove()
-        	->process(array( 
-				'app_id' => $app['app_id'] ));
+            ->model('app')
+            ->remove()
+            ->process(array( 
+                'app_id' => $app['app_id'] ));
 
-		$this->assertEquals(0, $row['app_active']);
+        $this->assertEquals(0, $row['app_active']);
     }
 }

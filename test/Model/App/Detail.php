@@ -7,22 +7,22 @@
  */
 class Eve_Model_App_Detail_Test extends PHPUnit_Framework_TestCase
 {
-	public function testErrors() 
-	{
+    public function testErrors() 
+    {
         $errors = eve()->model('app')->detail()->errors();
-		$this->assertEquals('Cannot be empty', $errors['app_id']);
+        $this->assertEquals('Cannot be empty', $errors['app_id']);
     }
-	
+    
     public function testProcess() 
-	{	
-		$app = eve()->registry()->get('test', 'app');
+    {    
+        $app = eve()->registry()->get('test', 'app');
 
         $row = eve()
-        	->model('app')
-        	->detail()
-        	->process(array('app_id' => $app['app_id']))
-        	->getRow();
-		
-		$this->assertEquals('TEST APP', $row['app_name']);
+            ->model('app')
+            ->detail()
+            ->process(array('app_id' => $app['app_id']))
+            ->getRow();
+        
+        $this->assertEquals('TEST APP', $row['app_name']);
     }
 }

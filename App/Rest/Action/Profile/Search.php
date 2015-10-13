@@ -1,6 +1,6 @@
 <?php //-->
-/*
- * A Custom Library
+/**
+ * A Custom Project
  *
  * Copyright and license information can be found at LICENSE
  * distributed with this package.
@@ -64,6 +64,9 @@ use Eve\Framework\Action\Json;
  */
 class Search extends Json 
 {
+    /**
+     * @var int $range Pagination range
+     */
     protected $range = 50;
     
     /**
