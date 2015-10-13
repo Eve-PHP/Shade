@@ -36,7 +36,8 @@ use Eve\Framework\Model\Exception;
  * @standard PSR-2
  */
 class Remove extends Base
-{    
+{
+
     /**
      * Returns errors if any
      *
@@ -45,7 +46,7 @@ class Remove extends Base
      *
      * @return array error
      */
-    public function errors(array $data = array(), array $errors = array()) 
+    public function errors(array $data = array(), array $errors = array())
     {
         //prepare
         $data = $this->prepare($data);
@@ -53,7 +54,7 @@ class Remove extends Base
         //REQUIRED
         
         // auth_id            Required
-        if(!isset($data['auth_id'])
+        if (!isset($data['auth_id'])
             || !$this('validation', $data['auth_id'])->isType('integer', true)
         ) {
             $errors['auth_id'] = self::INVALID_REQUIRED;
@@ -69,10 +70,10 @@ class Remove extends Base
      *
      * @return mixed
      */
-    public function process(array $data = array()) 
+    public function process(array $data = array())
     {
         //prevent uncatchable error
-        if(count($this->errors($data))) {
+        if (count($this->errors($data))) {
             throw new Exception(self::FAIL_406);
         }
         

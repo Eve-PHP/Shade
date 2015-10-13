@@ -47,7 +47,7 @@ class Access extends Base
      *
      * @return array error
      */
-    public function errors(array $data = array(), array $errors = array()) 
+    public function errors(array $data = array(), array $errors = array())
     {
         //prepare
         $data = $this->prepare($data);
@@ -55,17 +55,17 @@ class Access extends Base
         //REQUIRED
 
         // client_id        required
-        if(!isset($data['client_id']) || empty($data['client_id'])) {
+        if (!isset($data['client_id']) || empty($data['client_id'])) {
             $errors['client_id'] = self::INVALID_REQUIRED;
         }
         
         // client_secret        required
-        if(!isset($data['client_secret']) || empty($data['client_secret'])) {
+        if (!isset($data['client_secret']) || empty($data['client_secret'])) {
             $errors['client_secret'] = self::INVALID_REQUIRED;
         }
         
         // code        required
-        if(!isset($data['code']) || empty($data['code'])) {
+        if (!isset($data['code']) || empty($data['code'])) {
             $errors['code'] = self::INVALID_REQUIRED;
         }
         
@@ -79,10 +79,10 @@ class Access extends Base
      *
      * @return mixed
      */
-    public function process(array $data = array()) 
+    public function process(array $data = array())
     {
         //prevent uncatchable error
-        if(count($this->errors($data))) {
+        if (count($this->errors($data))) {
             throw new Exception(self::FAIL_406);
         }
         
@@ -108,7 +108,7 @@ class Access extends Base
             
         $model = $search->getModel();
 
-        if(!$model || $model['session_status'] !== 'PENDING') {
+        if (!$model || $model['session_status'] !== 'PENDING') {
             throw new Exception(self::FAIL_410);
         }
         

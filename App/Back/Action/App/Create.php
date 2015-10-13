@@ -39,7 +39,7 @@ use Eve\Framework\Action\Html;
  *    -- $this->request->get('server') - $_SERVER data
  *       You are free to use the $_SERVER variable if you like
  *
- *    -- $this->request->get('body') - raw body for 
+ *    -- $this->request->get('body') - raw body for
  *       POST requests that provide JSON data for example
  *       instead of the default x-form-data
  *
@@ -50,10 +50,10 @@ use Eve\Framework\Action\Html;
  *    -- $this->response->set('body', 'Foo') - Sets the response body.
  *       Alternative for returning a string in render()
  *
- *    -- $this->response->set('headers', 'Foo', 'Bar') - Sets a 
+ *    -- $this->response->set('headers', 'Foo', 'Bar') - Sets a
  *       header item to 'Foo: Bar' given key/value
  *
- *    -- $this->response->set('headers', 'Foo', '') - Sets a 
+ *    -- $this->response->set('headers', 'Foo', '') - Sets a
  *       header item to 'Foo' given that no value is present
  *       QUIRK: $this->response->set('headers', 'Foo') will erase
  *       all existing headers
@@ -63,7 +63,7 @@ use Eve\Framework\Action\Html;
  * @author   Christian Blanquera <cblanquera@openovate.com>
  * @standard PSR-2
  */
-class Create extends Html 
+class Create extends Html
 {
     /**
      * @const string FAIL_401 Error template
@@ -90,20 +90,21 @@ class Create extends Html
      *
      * @return string|null|void
      */
-    public function render() 
+    public function render()
     {
         //if no profile_id
-        if(!isset($_SESSION['me']['profile_id'])) {
+        if (!isset($_SESSION['me']['profile_id'])) {
             //permission check failed
             return $this->fail(
                 self::FAIL_401,
-                '/control/app/search');
+                '/control/app/search'
+            );
         }
         
         $data['profile_id'] = $_SESSION['me']['profile_id'];
         
         //if it's a post
-        if(!empty($_POST)) {
+        if (!empty($_POST)) {
             return $this->check($data);
         }
         
@@ -121,14 +122,14 @@ class Create extends Html
      *
      * @return string|null|void
      */
-    protected function check($data) 
+    protected function check($data)
     {
         //-----------------------//
         // 1. Get Data
         $data = array('item' => array_merge($data, $this->request->get('post')));
         
         //merge app_permissions
-        if(isset($data['item']['app_permissions'])
+        if (isset($data['item']['app_permissions'])
             && is_array($data['item']['app_permissions'])
         ) {
             $data['item']['app_permissions'] = implode(',', $data['item']['app_permissions']);
@@ -143,11 +144,12 @@ class Create extends Html
             ->errors($data['item']);
         
         //if there are errors
-        if(!empty($errors)) {
+        if (!empty($errors)) {
             return $this->fail(
-                self::FAIL_406, 
-                $errors, 
-                $data['item']);
+                self::FAIL_406,
+                $errors,
+                $data['item']
+            );
         }
         
         //-----------------------//
@@ -158,18 +160,20 @@ class Create extends Html
                 ->setData($data['item'])
                 ->run();
 
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return $this->fail(
-                $e->getMessage(), 
-                array(), 
-                $data['item']);
+                $e->getMessage(),
+                array(),
+                $data['item']
+            );
         }
         
         //NOTE: do something with results here
         
         //success
         return $this->success(
-            self::SUCCESS_200, 
-            '/control/app/search');
+            self::SUCCESS_200,
+            '/control/app/search'
+        );
     }
 }

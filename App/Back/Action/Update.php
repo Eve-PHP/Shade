@@ -39,7 +39,7 @@ use Eve\Framework\Action\Html;
  *    -- $this->request->get('server') - $_SERVER data
  *       You are free to use the $_SERVER variable if you like
  *
- *    -- $this->request->get('body') - raw body for 
+ *    -- $this->request->get('body') - raw body for
  *       POST requests that provide JSON data for example
  *       instead of the default x-form-data
  *
@@ -50,10 +50,10 @@ use Eve\Framework\Action\Html;
  *    -- $this->response->set('body', 'Foo') - Sets the response body.
  *       Alternative for returning a string in render()
  *
- *    -- $this->response->set('headers', 'Foo', 'Bar') - Sets a 
+ *    -- $this->response->set('headers', 'Foo', 'Bar') - Sets a
  *       header item to 'Foo: Bar' given key/value
  *
- *    -- $this->response->set('headers', 'Foo', '') - Sets a 
+ *    -- $this->response->set('headers', 'Foo', '') - Sets a
  *       header item to 'Foo' given that no value is present
  *       QUIRK: $this->response->set('headers', 'Foo') will erase
  *       all existing headers
@@ -63,7 +63,7 @@ use Eve\Framework\Action\Html;
  * @author   Christian Blanquera <cblanquera@openovate.com>
  * @standard PSR-2
  */
-class Update extends Html 
+class Update extends Html
 {
     /**
      * @const string FAIL_401 Error template
@@ -90,10 +90,10 @@ class Update extends Html
      *
      * @return string|null|void
      */
-    public function render() 
+    public function render()
     {
         //if it's a post
-        if(!empty($_POST)) {
+        if (!empty($_POST)) {
             return $this->check();
         }
         
@@ -108,7 +108,7 @@ class Update extends Html
      *
      * @return string|null|void
      */
-    protected function check() 
+    protected function check()
     {
         //-----------------------//
         // 1. Get Data
@@ -131,27 +131,30 @@ class Update extends Html
             ->model('profile')
             ->update()
             ->errors(
-                $data['item'], 
-                $errors);
+                $data['item'],
+                $errors
+            );
         
         //if there are errors
-        if(!empty($errors)) {
+        if (!empty($errors)) {
             return $this->fail(
-                self::FAIL_406, 
-                $errors, 
-                $data['item']);
-        }    
+                self::FAIL_406,
+                $errors,
+                $data['item']
+            );
+        }
 
         $exists = eve()
             ->model('auth')
             ->exists($data['item']['profile_email']);
         
         //if exists, make sure it's me
-        if($exists && $_SESSION['me']['auth_slug'] !== $data['item']['profile_email']) {
+        if ($exists && $_SESSION['me']['auth_slug'] !== $data['item']['profile_email']) {
             return $this->fail(
                 self::FAIL_401,
                 array(),
-                $data['item']);
+                $data['item']
+            );
         }
         
         //-----------------------//
@@ -161,12 +164,12 @@ class Update extends Html
                 ->job('auth-update')
                 ->setData($data['item'])
                 ->run();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return $this->fail(
                 $e->getMessage(),
                 array(),
                 $data['item']
-            );    
+            );
         }
         
         $_SESSION['me']['auth_slug'] = $data['item']['profile_email'];
@@ -177,7 +180,8 @@ class Update extends Html
 
         //success
         return $this->success(
-            self::SUCCESS_200, 
-            '/control/app/search');
+            self::SUCCESS_200,
+            '/control/app/search'
+        );
     }
 }

@@ -41,7 +41,7 @@ use Eve\App\Dialog\Route;
  *    -- $this->request->get('server') - $_SERVER data
  *       You are free to use the $_SERVER variable if you like
  *
- *    -- $this->request->get('body') - raw body for 
+ *    -- $this->request->get('body') - raw body for
  *       POST requests that provide JSON data for example
  *       instead of the default x-form-data
  *
@@ -52,10 +52,10 @@ use Eve\App\Dialog\Route;
  *    -- $this->response->set('body', 'Foo') - Sets the response body.
  *       Alternative for returning a string in render()
  *
- *    -- $this->response->set('headers', 'Foo', 'Bar') - Sets a 
+ *    -- $this->response->set('headers', 'Foo', 'Bar') - Sets a
  *       header item to 'Foo: Bar' given key/value
  *
- *    -- $this->response->set('headers', 'Foo', '') - Sets a 
+ *    -- $this->response->set('headers', 'Foo', '') - Sets a
  *       header item to 'Foo' given that no value is present
  *       QUIRK: $this->response->set('headers', 'Foo') will erase
  *       all existing headers
@@ -92,14 +92,14 @@ class Request extends Html
      *
      * @return string|null|void
      */
-    public function render() 
+    public function render()
     {
         $data = array('app' => $this->request->get('source'));
         
         //there should be a client_id, redirect_uri
         //client_id is already checked in the router
         //state is optional
-        if(!isset($_GET['redirect_uri'])) {
+        if (!isset($_GET['redirect_uri'])) {
             $this->template = 'invalid';
             return $this->success();
         }
@@ -107,7 +107,7 @@ class Request extends Html
         //scope by default is public_sso
         $data['request_permissions'] = 'public_sso';
         
-        if(isset($_GET['scope'])) {
+        if (isset($_GET['scope'])) {
             $data['request_permissions'] = $_GET['scope'];
         }
         
@@ -120,20 +120,20 @@ class Request extends Html
         //check scopes with registered app permissions
         $permitted = true;
         foreach ($data['request_permissions'] as $permission) {
-            if(!in_array($permission, $data['app_permissions'])) {
+            if (!in_array($permission, $data['app_permissions'])) {
                 $permitted = false;
             }
         }
         
         //did they all match ?
-        if(!$permitted) {
+        if (!$permitted) {
             $this->template = 'invalid';
             return $this->success();
         }
         
         //okay it is permitted
         //if there's not session
-        if(!isset($_SESSION['me'])) {
+        if (!isset($_SESSION['me'])) {
             //go back to the login
             //pass the request query
             $query = $this->request->get('query');
@@ -142,7 +142,7 @@ class Request extends Html
         }
         
         //if it's a post
-        if(!empty($_POST)) {
+        if (!empty($_POST)) {
             return $this->check();
         }
         
@@ -153,20 +153,20 @@ class Request extends Html
         $data['user_permissions'] = array();
         $data['global_permissions'] = array();
         
-        foreach($roles as $role => $meta) {
-            if(strpos($role, 'user_') !== 0) {
+        foreach ($roles as $role => $meta) {
+            if (strpos($role, 'user_') !== 0) {
                 $data['global_permissions'][] = $role;
             }
         }
         
-        foreach($data['request_permissions'] as $role) {
+        foreach ($data['request_permissions'] as $role) {
             //prevent random roles from being assigned
-            if(!isset($roles[$role])) {
+            if (!isset($roles[$role])) {
                 continue;
             }
             
             //if its not a user permission, it's a global permission
-            if(strpos($role, 'user_') !== 0) {
+            if (strpos($role, 'user_') !== 0) {
                 continue;
             }
             
@@ -184,19 +184,19 @@ class Request extends Html
      *
      * @return string|null|void
      */
-    protected function check() 
+    protected function check()
     {
         //get the item
         $data = array('item' => $this->request->get('post'));
         $data['item']['app_id'] = $this->request->get('source', 'app_id');
         $data['item']['auth_id'] = $_SESSION['me']['auth_id'];
         
-        if(is_array($data['item']['session_permissions'])) {
+        if (is_array($data['item']['session_permissions'])) {
             $data['item']['session_permissions'] = implode(',', $data['item']['session_permissions']);
         }
         
         //no need to process if the action is not allow
-        if($data['item']['action'] !== 'allow') {
+        if ($data['item']['action'] !== 'allow') {
             //go back to the app
             return $this->redirect(array('error' => 'access_denied'));
         }
@@ -206,11 +206,12 @@ class Request extends Html
             ->request()
             ->errors($data['item']);
     
-        if(!empty($errors)) {
+        if (!empty($errors)) {
             return $this->fail(
-                self::FAIL_406, 
-                $errors, 
-                $data['item']);
+                self::FAIL_406,
+                $errors,
+                $data['item']
+            );
         }
         
         //process
@@ -219,7 +220,7 @@ class Request extends Html
             ->setData($data['item'])
             ->run();
 
-        if(!isset($results['session'])) {
+        if (!isset($results['session'])) {
             return $this->fail(self::FAIL_400);
         }
         
@@ -234,22 +235,22 @@ class Request extends Html
      *
      * @return string
      */
-    protected function redirect(array $query = array()) 
+    protected function redirect(array $query = array())
     {
         $url = $_GET['redirect_uri'];
         
-        if(isset($_GET['state'])) {
+        if (isset($_GET['state'])) {
             $query['state'] = $_GET['state'];
         }
         
         $query = http_build_query($query);
         
-        if(empty($query)) {
+        if (empty($query)) {
             eve()->redirect($url);
         }
         
         $separator = '?';
-        if(strpos($url, '?') !== false) {
+        if (strpos($url, '?') !== false) {
             $separator = '&';
         }
         

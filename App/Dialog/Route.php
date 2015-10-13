@@ -15,14 +15,14 @@ use Eve\Framework\Base;
 use Eve\App\Dialog\Action\Invalid;
 
 /**
- * Validates Dialog requests 
+ * Validates Dialog requests
  *
  * @vendor   Custom
  * @package  Project
  * @author   Christian Blanquera <cblanquera@openovate.com>
  * @standard PSR-2
  */
-class Route extends Base 
+class Route extends Base
 {
     /**
      * @const int INSTANCE Flag that designates singleton when using ::i()
@@ -63,7 +63,7 @@ class Route extends Base
      *
      * @return false
      */
-    public function fail($request, $response) 
+    public function fail($request, $response)
     {
         eve()->registry()->set('path', 'template', __DIR__.'/template');
         
@@ -82,15 +82,15 @@ class Route extends Base
      *
      * @return function
      */
-    public function import() 
+    public function import()
     {
         //remember this scope
         $self = $this;
         
         //loop through routes
-        foreach($self->routes as $route => $meta) {
+        foreach ($self->routes as $route => $meta) {
             //form the callback
-            $callback = function($request, $response) use ($self, $route, $meta) {
+            $callback = function ($request, $response) use ($self, $route, $meta) {
                 
                 $path = $request->get('path', 'string');
                 
@@ -123,14 +123,14 @@ class Route extends Base
                 
                 //if there are results
                 //and no body was set
-                if($results 
+                if ($results
                 && is_scalar($results)
                 && !$response->isKey('body')) {
                     $response->set('body', (string) $results);
                 }
                 
                 //prevent something else from taking over
-                if($response->isKey('body')) {
+                if ($response->isKey('body')) {
                     return false;
                 }
             };
@@ -140,13 +140,13 @@ class Route extends Base
         }
         
         //You can add validators here
-        return function($request, $response) use ($self) {
+        return function ($request, $response) use ($self) {
             //get the path
             $path = $request->get('path', 'string');
             
             
             //if this is not a dialog call
-            if($path !== '/dialog' && strpos($path, '/dialog/') !== 0) {
+            if ($path !== '/dialog' && strpos($path, '/dialog/') !== 0) {
                 //business as usual
                 return;
             }
@@ -155,7 +155,7 @@ class Route extends Base
             list($route, $meta, $variables) = $self->getRoute($request);
             
             //if no route was found
-            if(!$route) {
+            if (!$route) {
                 //don't allow
                 return $self->fail($request, $response);
             }
@@ -167,42 +167,44 @@ class Route extends Base
             //determine the token
             $token = null;
             
-            if($request->isKey('get', 'access_token')) {
+            if ($request->isKey('get', 'access_token')) {
                 $token = $request->get('get', 'access_token');
             }
             
-            if($request->isKey('get', 'client_id')) {
+            if ($request->isKey('get', 'client_id')) {
                 $token = $request->get('get', 'client_id');
             }
                 
             //must have access token
-            if(!$token) {
+            if (!$token) {
                 //all dialogs must include an access token
                 return $self->fail($request, $response);
             }
             
             //if no meta role
-            if(!isset($meta['role'])) {
+            if (!isset($meta['role'])) {
                 //set it
                 $meta['role'] = null;
             }
             
             //if user
-            if(strpos($meta['role'], 'user_') === 0) {
+            if (strpos($meta['role'], 'user_') === 0) {
                 return $self->validateUser(
-                    $request, 
-                    $response, 
-                    $token, 
-                    $meta['role']);
+                    $request,
+                    $response,
+                    $token,
+                    $meta['role']
+                );
             }
             
             //load global actions
             return $self->validateGlobal(
-                $request, 
-                $response, 
-                $token, 
-                $meta['role']);
-        };    
+                $request,
+                $response,
+                $token,
+                $meta['role']
+            );
+        };
     }
     
     /**
@@ -212,19 +214,19 @@ class Route extends Base
      *
      * @return array
      */
-    public function getRoute($request) 
+    public function getRoute($request)
     {
         $path = $request->get('path', 'string');
         
         //find the route
-        foreach($this->routes as $pattern => $meta) {
+        foreach ($this->routes as $pattern => $meta) {
             $regex = str_replace('**', '!!', $pattern);
             $regex = str_replace('*', '([^/]*)', $regex);
             $regex = str_replace('!!', '(.*)', $regex);
             
             $regex = '#^'.$regex.'(.*)#';
             
-            if(!preg_match($regex, $path, $matches)) {
+            if (!preg_match($regex, $path, $matches)) {
                 continue;
             }
             
@@ -248,7 +250,7 @@ class Route extends Base
      * @return string|void
      */
     public function validateGlobal(
-        $request, 
+        $request,
         $response,
         $token,
         $role
@@ -259,25 +261,29 @@ class Route extends Base
             ->database()
             ->search('app')
             ->setColumns(
-                'profile.*', 
-                'app.*')
+                'profile.*',
+                'app.*'
+            )
             ->innerJoinOn(
-                'app_profile', 
-                'app_profile_app = app_id')
+                'app_profile',
+                'app_profile_app = app_id'
+            )
             ->innerJoinOn(
-                'profile', 
-                'app_profile_profile = profile_id')
+                'profile',
+                'app_profile_profile = profile_id'
+            )
             ->filterByAppToken($token);
             
-        if(isset($meta['role'])) {
+        if (isset($meta['role'])) {
             $search->addFilter(
-                'app_permissions LIKE %s', 
-                '%' . $role . '%');
+                'app_permissions LIKE %s',
+                '%' . $role . '%'
+            );
         }
         
         $row = $search->getRow();
         
-        if(empty($row)) {
+        if (empty($row)) {
             //don't allow
             return $this->fail($request, $response);
         }
@@ -298,7 +304,7 @@ class Route extends Base
      * @return string|void
      */
     public function validateUser(
-        $request, 
+        $request,
         $response,
         $token,
         $role
@@ -308,33 +314,40 @@ class Route extends Base
             ->database()
             ->search('session')
             ->setColumns(
-                'session.*', 
-                'profile.*', 
-                'app.*')
+                'session.*',
+                'profile.*',
+                'app.*'
+            )
             ->innerJoinOn(
-                'session_app', 
-                'session_app_session = session_id')
+                'session_app',
+                'session_app_session = session_id'
+            )
             ->innerJoinOn(
-                'app', 
-                'session_app_app = app_id')
+                'app',
+                'session_app_app = app_id'
+            )
             ->innerJoinOn(
-                'session_auth', 
-                'session_auth_session = session_id')
+                'session_auth',
+                'session_auth_session = session_id'
+            )
             ->innerJoinOn(
-                'auth_profile', 
-                'auth_profile_auth = session_auth_auth')
+                'auth_profile',
+                'auth_profile_auth = session_auth_auth'
+            )
             ->innerJoinOn(
-                'profile', 
-                'auth_profile_profile = profile_id')
+                'profile',
+                'auth_profile_profile = profile_id'
+            )
             ->filterBySessionToken($token)
             ->filterBySessionStatus('ACCESS')
             ->addFilter(
-                'session_permissions LIKE %s', 
-                '%' . $role . '%');
+                'session_permissions LIKE %s',
+                '%' . $role . '%'
+            );
         
         $row = $search->getRow();
         
-        if(empty($row)) {
+        if (empty($row)) {
             //don't allow
             return $this->fail($request, $response);
         }
@@ -359,7 +372,7 @@ class Route extends Base
      *
      * @return array
      */
-    public function getVariables($route, $path) 
+    public function getVariables($route, $path)
     {
         $variables = array();
         
@@ -369,22 +382,22 @@ class Route extends Base
         
         $regex = '#^'.$regex.'(.*)#';
         
-        if(!preg_match($regex, $path, $matches)) {
+        if (!preg_match($regex, $path, $matches)) {
             return $variables;
         }
         
-        if(!is_array($matches)) {
+        if (!is_array($matches)) {
             return $variables;
         }
         
         array_shift($matches);
         
-        foreach($matches as $path) {
+        foreach ($matches as $path) {
             $variables = array_merge($variables, explode('/', $path));
         }
         
-        foreach($variables as $i => $variable) {
-            if(!$variable) {
+        foreach ($variables as $i => $variable) {
+            if (!$variable) {
                 unset($variables[$i]);
             }
         }

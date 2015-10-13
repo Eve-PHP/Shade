@@ -39,7 +39,7 @@ use Eve\Framework\Action\Html;
  *    -- $this->request->get('server') - $_SERVER data
  *       You are free to use the $_SERVER variable if you like
  *
- *    -- $this->request->get('body') - raw body for 
+ *    -- $this->request->get('body') - raw body for
  *       POST requests that provide JSON data for example
  *       instead of the default x-form-data
  *
@@ -50,10 +50,10 @@ use Eve\Framework\Action\Html;
  *    -- $this->response->set('body', 'Foo') - Sets the response body.
  *       Alternative for returning a string in render()
  *
- *    -- $this->response->set('headers', 'Foo', 'Bar') - Sets a 
+ *    -- $this->response->set('headers', 'Foo', 'Bar') - Sets a
  *       header item to 'Foo: Bar' given key/value
  *
- *    -- $this->response->set('headers', 'Foo', '') - Sets a 
+ *    -- $this->response->set('headers', 'Foo', '') - Sets a
  *       header item to 'Foo' given that no value is present
  *       QUIRK: $this->response->set('headers', 'Foo') will erase
  *       all existing headers
@@ -63,7 +63,7 @@ use Eve\Framework\Action\Html;
  * @author   Christian Blanquera <cblanquera@openovate.com>
  * @standard PSR-2
  */
-class Search extends Html 
+class Search extends Html
 {
     /**
      * @const string FAIL_401 Error template
@@ -95,7 +95,7 @@ class Search extends Html
      *
      * @return string|null|void
      */
-    public function render() 
+    public function render()
     {
         //-----------------------//
         // 1. Get Data
@@ -104,27 +104,28 @@ class Search extends Html
         //-----------------------//
         // 2. Validate
         //if no profile_id
-        if(!isset($_SESSION['me']['profile_id'])) {
+        if (!isset($_SESSION['me']['profile_id'])) {
             //permission check failed
             return $this->fail(
                 self::FAIL_401,
-                '/control/login');
+                '/control/login'
+            );
         }
         
         //-----------------------//
         // 3. Process
-        if(!empty($_POST)) {
+        if (!empty($_POST)) {
             return $this->check();
         }
         
         $data['range'] = $this->range;
         
         $mode = 'active';
-        if(isset($data['mode'])) {
-           $mode = $data['mode'];
+        if (isset($data['mode'])) {
+            $mode = $data['mode'];
         }
         
-        switch($mode) {
+        switch ($mode) {
             case 'active':
                 $data['filter']['app_active'] = 1;
                 break;
@@ -141,17 +142,17 @@ class Search extends Html
         //join profile_id
         $search
             ->innerJoinOn(
-                'app_profile', 
-                'app_profile_app = app_id')
+                'app_profile',
+                'app_profile_app = app_id'
+            )
             ->filterByAppProfileProfile($_SESSION['me']['profile_id']);
         
-        //get rows  
+        //get rows
         $rows = $search->getRows();
         //get total
         $total = $search->getTotal();
         
-        foreach($rows as $i => $row) {
-            
+        foreach ($rows as $i => $row) {
             $rows[$i]['app_updated'] = date('M d', strtotime($row['app_updated']));
         }
         
@@ -161,7 +162,7 @@ class Search extends Html
         $this->body['mode'] = $mode;
         $this->body['keyword'] = null;
         
-        if(isset($_GET['keyword'])) {
+        if (isset($_GET['keyword'])) {
             $this->body['keyword'] = $_GET['keyword'];
         }
         
@@ -176,7 +177,7 @@ class Search extends Html
      *
      * @return string|null|void
      */
-    protected function check() 
+    protected function check()
     {
         //-----------------------//
         // 1. Get Data
@@ -184,18 +185,19 @@ class Search extends Html
         
         //-----------------------//
         //2. Validate
-        if(!isset($data['action']) 
-            || !isset($data['id']) 
+        if (!isset($data['action'])
+            || !isset($data['id'])
             || !is_array($data['id'])
         ) {
             return $this->fail(
                 self::FAIL_404,
-                '/control/app/search');
+                '/control/app/search'
+            );
         }
         
         //-----------------------//
         //3. Process
-        foreach($data['id'] as $id) {
+        foreach ($data['id'] as $id) {
                $item = array('app_id' => $id);
             
             try {
@@ -203,15 +205,17 @@ class Search extends Html
                     ->job('app-'.$data['action'])
                     ->setData($item)
                     ->run();
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 return $this->fail(
                     $e->getMessage,
-                    '/control/app/search');
+                    '/control/app/search'
+                );
             }
         }
         
         return $this->success(
-            sprintf(self::SUCCESS_200, $data['action'].'d'), 
-            '/control/app/search');
+            sprintf(self::SUCCESS_200, $data['action'].'d'),
+            '/control/app/search'
+        );
     }
 }

@@ -39,7 +39,7 @@ use Eve\Framework\Action\Html;
  *    -- $this->request->get('server') - $_SERVER data
  *       You are free to use the $_SERVER variable if you like
  *
- *    -- $this->request->get('body') - raw body for 
+ *    -- $this->request->get('body') - raw body for
  *       POST requests that provide JSON data for example
  *       instead of the default x-form-data
  *
@@ -50,10 +50,10 @@ use Eve\Framework\Action\Html;
  *    -- $this->response->set('body', 'Foo') - Sets the response body.
  *       Alternative for returning a string in render()
  *
- *    -- $this->response->set('headers', 'Foo', 'Bar') - Sets a 
+ *    -- $this->response->set('headers', 'Foo', 'Bar') - Sets a
  *       header item to 'Foo: Bar' given key/value
  *
- *    -- $this->response->set('headers', 'Foo', '') - Sets a 
+ *    -- $this->response->set('headers', 'Foo', '') - Sets a
  *       header item to 'Foo' given that no value is present
  *       QUIRK: $this->response->set('headers', 'Foo') will erase
  *       all existing headers
@@ -63,7 +63,7 @@ use Eve\Framework\Action\Html;
  * @author   Christian Blanquera <cblanquera@openovate.com>
  * @standard PSR-2
  */
-class Update extends Html 
+class Update extends Html
 {
     /**
      * @const string FAIL_401 Error template
@@ -95,7 +95,7 @@ class Update extends Html
      *
      * @return string|null|void
      */
-    public function render() 
+    public function render()
     {
         //-----------------------//
         // 1. Get Data
@@ -105,26 +105,28 @@ class Update extends Html
         $data['app_id'] = $this->request->get('variables', 0);
         
         //was it not included in the url ?
-        if(!isset($data['app_id']) 
+        if (!isset($data['app_id'])
         && isset($_SESSION['me']['app_id'])) {
             //get it from the session
             $data['app_id'] = $_SESSION['me']['app_id'];
         }
         
         //it's going to fail if we don't have the app_id
-        if(!isset($data['app_id'])) {
+        if (!isset($data['app_id'])) {
             //we might as we an fail it now
             return $this->fail(
                 self::FAIL_404,
-                '/control/app/search');
+                '/control/app/search'
+            );
         }
         
         //if no profile_id
-        if(!isset($_SESSION['me']['profile_id'])) {
+        if (!isset($_SESSION['me']['profile_id'])) {
             //permission check failed
             return $this->fail(
                 self::FAIL_401,
-                '/control/app/search');
+                '/control/app/search'
+            );
         }
         
         $data['profile_id'] = $_SESSION['me']['profile_id'];
@@ -135,14 +137,16 @@ class Update extends Html
         $yes = eve()
             ->model('app')
             ->permissions(
-                $data['app_id'], 
-                $data['profile_id']);
+                $data['app_id'],
+                $data['profile_id']
+            );
 
         //if not permitted, fail
-        if(!$yes) {
+        if (!$yes) {
             return $this->fail(
                 self::FAIL_401,
-                '/control/app/search');
+                '/control/app/search'
+            );
         }
         //does it exist?
         $row = eve()
@@ -151,16 +155,17 @@ class Update extends Html
             ->process($data)
             ->getRow();
         
-        if(!$row) {
+        if (!$row) {
             return $this->fail(
                 self::FAIL_404,
-                '/control/app/search');
+                '/control/app/search'
+            );
         }
         
         //-----------------------//
         // 3. Process
         //if it's a post
-        if(!empty($_POST)) {
+        if (!empty($_POST)) {
             return $this->check($data);
         }
         
@@ -179,14 +184,14 @@ class Update extends Html
      *
      * @return string|null|void
      */
-    protected function check($data) 
+    protected function check($data)
     {
         //-----------------------//
         // 1. Get Data
         $data = array('item' => array_merge($data, $this->request->get('post')));
         
         //merge app_permissions
-        if(isset($data['item']['app_permissions'])
+        if (isset($data['item']['app_permissions'])
             && is_array($data['item']['app_permissions'])
         ) {
             $data['item']['app_permissions'] = implode(',', $data['item']['app_permissions']);
@@ -200,11 +205,12 @@ class Update extends Html
             ->errors($data['item']);
         
         //if there are errors
-        if(!empty($errors)) {
+        if (!empty($errors)) {
             return $this->fail(
-                self::FAIL_406, 
-                $errors, 
-                $data['item']);
+                self::FAIL_406,
+                $errors,
+                $data['item']
+            );
         }
         
         //-----------------------//
@@ -214,17 +220,19 @@ class Update extends Html
                 ->job('app-update')
                 ->setData($data['item'])
                 ->run();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return $this->fail(
-                $e->getMessage(), 
-                array(), 
-                $data['item']);
+                $e->getMessage(),
+                array(),
+                $data['item']
+            );
         }
         
         //NOTE: do something with results here
         
         return $this->success(
-            self::SUCCESS_200, 
-            '/control/app/search');
+            self::SUCCESS_200,
+            '/control/app/search'
+        );
     }
 }

@@ -55,21 +55,24 @@ class Index extends Base
      *
      * @return array
      */
-    public function getProfileByToken($token) 
+    public function getProfileByToken($token)
     {
         return eve()
             ->database()
             ->search('session')
             ->setColumns('profile.*')
             ->innerJoinOn(
-                'session_auth', 
-                'session_auth_session = session_id')
+                'session_auth',
+                'session_auth_session = session_id'
+            )
             ->innerJoinOn(
-                'auth_profile', 
-                'auth_profile_auth = session_auth_auth')
+                'auth_profile',
+                'auth_profile_auth = session_auth_auth'
+            )
             ->innerJoinOn(
-                'profile', 
-                'auth_profile_profile = profile_id')
+                'profile',
+                'auth_profile_profile = profile_id'
+            )
             ->filterBySessionToken($token)
             ->getRow();
     }
@@ -82,18 +85,20 @@ class Index extends Base
      *
      * @return array
      */
-    public function getAppByToken($token) 
+    public function getAppByToken($token)
     {
         return eve()
             ->database()
             ->search('session')
             ->setColumns('app.*')
             ->innerJoinOn(
-                'session_app', 
-                'session_app_session = session_id')
+                'session_app',
+                'session_app_session = session_id'
+            )
             ->innerJoinOn(
-                'app', 
-                'session_app_app = app_id')
+                'app',
+                'session_app_app = app_id'
+            )
             ->filterBySessionToken($token)
             ->getRow();
     }

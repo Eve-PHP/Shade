@@ -15,14 +15,14 @@ use Eve\Framework\Base;
 use Eve\App\Dialog\Action\Invalid;
 
 /**
- * Validates Front requests 
+ * Validates Front requests
  *
  * @vendor   Custom
  * @package  Project
  * @author   Christian Blanquera <cblanquera@openovate.com>
  * @standard PSR-2
  */
-class Route extends Base 
+class Route extends Base
 {
     /**
      * @const int INSTANCE Flag that designates singleton when using ::i()
@@ -49,15 +49,15 @@ class Route extends Base
      *
      * @return function
      */
-    public function import() 
+    public function import()
     {
         //remember this scope
         $self = $this;
         
         //loop through routes
-        foreach($this->routes as $route => $meta) {
+        foreach ($this->routes as $route => $meta) {
             //form the callback
-            $callback = function($request, $response) use ($self, $route, $meta) {
+            $callback = function ($request, $response) use ($self, $route, $meta) {
                 
                 $path = $request->get('path', 'string');
                 
@@ -89,14 +89,14 @@ class Route extends Base
                 
                 //if there are results
                 //and no body was set
-                if($results 
+                if ($results
                 && is_scalar($results)
                 && !$response->isKey('body')) {
                     $response->set('body', (string) $results);
                 }
                 
                 //prevent something else from taking over
-                if($response->isKey('body')) {
+                if ($response->isKey('body')) {
                     return false;
                 }
             };
@@ -106,7 +106,8 @@ class Route extends Base
         }
         
         //You can add validators here
-        return function($request, $response) use ($self) {};    
+        return function ($request, $response) use ($self) {
+        };
     }
     
     /**
@@ -118,7 +119,7 @@ class Route extends Base
      *
      * @return array
      */
-    public function getVariables($route, $path) 
+    public function getVariables($route, $path)
     {
         $variables = array();
         
@@ -128,22 +129,22 @@ class Route extends Base
         
         $regex = '#^'.$regex.'(.*)#';
         
-        if(!preg_match($regex, $path, $matches)) {
+        if (!preg_match($regex, $path, $matches)) {
             return $variables;
         }
         
-        if(!is_array($matches)) {
+        if (!is_array($matches)) {
             return $variables;
         }
         
         array_shift($matches);
         
-        foreach($matches as $path) {
+        foreach ($matches as $path) {
             $variables = array_merge($variables, explode('/', $path));
         }
         
-        foreach($variables as $i => $variable) {
-            if(!$variable) {
+        foreach ($variables as $i => $variable) {
+            if (!$variable) {
                 unset($variables[$i]);
             }
         }

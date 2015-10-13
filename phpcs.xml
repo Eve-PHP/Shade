@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<ruleset name="PHP_CodeSniffer">
+    <description>The coding standard for PHP_CodeSniffer itself.</description>
+
+    <file>App/Back/Action</file>
+    <file>App/Back/Route.php</file>
+    <file>App/Dialog/Action</file>
+    <file>App/Dialog/Route.php</file>
+    <file>App/Front/Action</file>
+    <file>App/Front/Route.php</file>
+    <file>App/Rest/Action</file>
+    <file>App/Rest/Route.php</file>
+    <file>Job</file>
+    <file>Model</file>
+
+    <arg name="report" value="full"/>
+    <arg value="np"/>
+
+    <rule ref="PSR2"/>
+</ruleset>

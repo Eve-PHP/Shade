@@ -45,13 +45,13 @@ class Remove extends Base
      *
      * @return array error
      */
-    public function errors(array $data = array(), array $errors = array()) 
+    public function errors(array $data = array(), array $errors = array())
     {
         //prepare
         $data = $this->prepare($data);
         
         // profile_id - required
-        if(!isset($data['profile_id'])
+        if (!isset($data['profile_id'])
         || !$this('validation', $data['profile_id'])->isType('int', true)) {
             $errors['profile_id'] = self::INVALID_REQUIRED;
         }
@@ -66,10 +66,10 @@ class Remove extends Base
      *
      * @return mixed
      */
-    public function process(array $data = array()) 
+    public function process(array $data = array())
     {
         //prevent uncatchable error
-        if(count($this->errors($data))) {
+        if (count($this->errors($data))) {
             throw new Exception(self::FAIL_406);
         }
         

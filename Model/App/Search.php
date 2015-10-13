@@ -45,7 +45,7 @@ class Search extends Base
      *
      * @return array error
      */
-    public function errors(array $data = array(), array $errors = array()) 
+    public function errors(array $data = array(), array $errors = array())
     {
         return $errors;
     }
@@ -57,10 +57,10 @@ class Search extends Base
      *
      * @return mixed
      */
-    public function process(array $data = array()) 
+    public function process(array $data = array())
     {
         //prevent uncatchable error
-        if(count($this->errors($data))) {
+        if (count($this->errors($data))) {
             throw new Exception(self::FAIL_406);
         }
         
@@ -74,23 +74,23 @@ class Search extends Base
         $count = 0;
         $keyword = null;
         
-        if(isset($data['filter']) && is_array($data['filter'])) {
+        if (isset($data['filter']) && is_array($data['filter'])) {
             $filter = $data['filter'];
         }
         
-        if(isset($data['range']) && is_numeric($data['range'])) {
+        if (isset($data['range']) && is_numeric($data['range'])) {
             $range = $data['range'];
         }
         
-        if(isset($data['start']) && is_numeric($data['start'])) {
+        if (isset($data['start']) && is_numeric($data['start'])) {
             $start = $data['start'];
         }
         
-        if(isset($data['order']) && is_array($data['order'])) {
+        if (isset($data['order']) && is_array($data['order'])) {
             $order = $data['order'];
         }
         
-        if(isset($data['keyword']) && is_scalar($data['keyword'])) {
+        if (isset($data['keyword']) && is_scalar($data['keyword'])) {
             $keyword = $data['keyword'];
         }
             
@@ -100,30 +100,27 @@ class Search extends Base
             ->setStart($start)
             ->setRange($range);
         
-        if(!isset($filter['app_active'])) {
+        if (!isset($filter['app_active'])) {
             $filter['app_active'] = 1;
         }
         
         //add filters
-        foreach($filter as $column => $value) {
-            if(preg_match('/^[a-zA-Z0-9-_]+$/', $column)) {
+        foreach ($filter as $column => $value) {
+            if (preg_match('/^[a-zA-Z0-9-_]+$/', $column)) {
                 $search->addFilter($column . ' = %s', $value);
             }
         }
         
         //keyword?
-        if($keyword) {
+        if ($keyword) {
             $search->addFilter('(' . implode(' OR ', array(
-                'app_name LIKE %s', 
-                'app_website LIKE %s', 
-            )) . ')' 
-                , '%'.$keyword.'%' 
-                , '%'.$keyword.'%' 
-            );
+                'app_name LIKE %s',
+                'app_website LIKE %s',
+            )) . ')', '%'.$keyword.'%', '%'.$keyword.'%');
         }
         
         //add sorting
-        foreach($order as $sort => $direction) {
+        foreach ($order as $sort => $direction) {
             $search->addSort($sort, $direction);
         }
         

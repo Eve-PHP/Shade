@@ -30,7 +30,7 @@ use Eve\Framework\Action\Json;
  *
  * -- $this->request - The Request Object using Eden\Registry\Index
  *
- *    -- $this->request->get('source') - Information gathered 
+ *    -- $this->request->get('source') - Information gathered
  *       from the tokens like profile, app etc.. This information
  *       was provided by the Validator plugin
  *
@@ -43,7 +43,7 @@ use Eve\Framework\Action\Json;
  *    -- $this->request->get('server') - $_SERVER data
  *       You are free to use the $_SERVER variable if you like
  *
- *    -- $this->request->get('body') - raw body for 
+ *    -- $this->request->get('body') - raw body for
  *       POST requests that provide JSON data for example
  *       instead of the default x-form-data
  *
@@ -54,15 +54,15 @@ use Eve\Framework\Action\Json;
  *    -- $this->response->set('body', 'Foo') - Sets the response body.
  *       Alternative for returning a string in render()
  *
- *    -- $this->response->set('headers', 'Foo', 'Bar') - Sets a 
+ *    -- $this->response->set('headers', 'Foo', 'Bar') - Sets a
  *       header item to 'Foo: Bar' given key/value
  *
- *    -- $this->response->set('headers', 'Foo', '') - Sets a 
+ *    -- $this->response->set('headers', 'Foo', '') - Sets a
  *       header item to 'Foo' given that no value is present
  *       QUIRK: $this->response->set('headers', 'Foo') will erase
  *       all existing headers
  */
-class Update extends Json 
+class Update extends Json
 {
     /**
      * @const string FAIL_401 Error template
@@ -84,28 +84,28 @@ class Update extends Json
      *
      * @return string|null|void
      */
-    public function render() 
+    public function render()
     {
         //-----------------------//
         // 1. Get Data
         $data = $this->request->get('post');
         
-        //was the id not included in the post? 
-        if(!isset($data['profile_id'])
+        //was the id not included in the post?
+        if (!isset($data['profile_id'])
         && $this->request->isKey('variables', 0)) {
             //get it from the url
             $data['profile_id'] = $this->request->get('variables', 0);
         }
         
         //was it not included in the url ?
-        if(!isset($data['profile_id']) 
+        if (!isset($data['profile_id'])
         && $this->request->isKey('source', 'profile_id')) {
             //get it from the source
             $data['profile_id'] = $this->request->get('source', 'profile_id');
         }
         
         //it's going to fail if we don't have the profile_id
-        if(!isset($data['profile_id'])) {
+        if (!isset($data['profile_id'])) {
             //we might as we an fail it now
             return $this->fail(self::FAIL_404);
         }
@@ -120,10 +120,11 @@ class Update extends Json
             ->errors($data);
         
         //if there are errors
-        if(!empty($errors)) {
+        if (!empty($errors)) {
             return $this->fail(
-                self::FAIL_406, 
-                $errors);
+                self::FAIL_406,
+                $errors
+            );
         }
         
 
@@ -134,7 +135,7 @@ class Update extends Json
             ->process($data)
             ->getTotal();
         
-        if(!$total) {
+        if (!$total) {
             return $this->fail(self::FAIL_404);
         }
         
@@ -145,7 +146,7 @@ class Update extends Json
                 ->job('profile-update')
                 ->setData($data)
                 ->run();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return $this->fail($e->getMessage());
         }
        

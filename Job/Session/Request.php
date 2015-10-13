@@ -34,7 +34,7 @@ use Eve\Framework\Job\Exception;
  * @author   Christian Blanquera <cblanquera@openovate.com>
  * @standard PSR-2
  */
-class Request extends Base 
+class Request extends Base
 {
     const FAIL_406 = 'Invalid Data';
     
@@ -43,10 +43,10 @@ class Request extends Base
      *
      * @return void
      */
-    public function run() 
+    public function run()
     {
         //if no data
-        if(empty($this->data)) {
+        if (empty($this->data)) {
             //there should be a global catch somewhere
             throw new Exception(self::FAIL_406);
         }

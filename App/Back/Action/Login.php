@@ -39,7 +39,7 @@ use Eve\Framework\Action\Html;
  *    -- $this->request->get('server') - $_SERVER data
  *       You are free to use the $_SERVER variable if you like
  *
- *    -- $this->request->get('body') - raw body for 
+ *    -- $this->request->get('body') - raw body for
  *       POST requests that provide JSON data for example
  *       instead of the default x-form-data
  *
@@ -50,10 +50,10 @@ use Eve\Framework\Action\Html;
  *    -- $this->response->set('body', 'Foo') - Sets the response body.
  *       Alternative for returning a string in render()
  *
- *    -- $this->response->set('headers', 'Foo', 'Bar') - Sets a 
+ *    -- $this->response->set('headers', 'Foo', 'Bar') - Sets a
  *       header item to 'Foo: Bar' given key/value
  *
- *    -- $this->response->set('headers', 'Foo', '') - Sets a 
+ *    -- $this->response->set('headers', 'Foo', '') - Sets a
  *       header item to 'Foo' given that no value is present
  *       QUIRK: $this->response->set('headers', 'Foo') will erase
  *       all existing headers
@@ -63,7 +63,7 @@ use Eve\Framework\Action\Html;
  * @author   Christian Blanquera <cblanquera@openovate.com>
  * @standard PSR-2
  */
-class Login extends Html 
+class Login extends Html
 {
     /**
      * @const string FAIL_404 Error template
@@ -90,10 +90,10 @@ class Login extends Html
      *
      * @return string|null|void
      */
-    public function render() 
+    public function render()
     {
         //if it's a post
-        if(!empty($_POST)) {
+        if (!empty($_POST)) {
             return $this->check();
         }
         
@@ -106,7 +106,7 @@ class Login extends Html
      *
      * @return string|null|void
      */
-    protected function check() 
+    protected function check()
     {
         //-----------------------//
         // 1. Get Data
@@ -121,11 +121,12 @@ class Login extends Html
             ->login()
             ->errors($data['item']);
 
-        if(!empty($errors)) {
+        if (!empty($errors)) {
             return $this->fail(
-                self::FAIL_406, 
-                $errors, 
-                $data['item']);
+                self::FAIL_406,
+                $errors,
+                $data['item']
+            );
         }
         
         //-----------------------//
@@ -135,11 +136,12 @@ class Login extends Html
             ->login()
             ->process($data['item']);
 
-        if(empty($row)) {
+        if (empty($row)) {
             return $this->fail(
                 self::FAIL_404,
                 array(),
-                $data['item']);
+                $data['item']
+            );
         }
 
         unset($row['auth_password']);
@@ -150,4 +152,3 @@ class Login extends Html
         eve()->redirect('/control/app/search');
     }
 }
-

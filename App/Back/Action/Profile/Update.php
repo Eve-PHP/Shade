@@ -39,7 +39,7 @@ use Eve\Framework\Action\Html;
  *    -- $this->request->get('server') - $_SERVER data
  *       You are free to use the $_SERVER variable if you like
  *
- *    -- $this->request->get('body') - raw body for 
+ *    -- $this->request->get('body') - raw body for
  *       POST requests that provide JSON data for example
  *       instead of the default x-form-data
  *
@@ -50,10 +50,10 @@ use Eve\Framework\Action\Html;
  *    -- $this->response->set('body', 'Foo') - Sets the response body.
  *       Alternative for returning a string in render()
  *
- *    -- $this->response->set('headers', 'Foo', 'Bar') - Sets a 
+ *    -- $this->response->set('headers', 'Foo', 'Bar') - Sets a
  *       header item to 'Foo: Bar' given key/value
  *
- *    -- $this->response->set('headers', 'Foo', '') - Sets a 
+ *    -- $this->response->set('headers', 'Foo', '') - Sets a
  *       header item to 'Foo' given that no value is present
  *       QUIRK: $this->response->set('headers', 'Foo') will erase
  *       all existing headers
@@ -63,7 +63,7 @@ use Eve\Framework\Action\Html;
  * @author   Christian Blanquera <cblanquera@openovate.com>
  * @standard PSR-2
  */
-class Update extends Html 
+class Update extends Html
 {
     /**
      * @const string FAIL_401 Error template
@@ -95,7 +95,7 @@ class Update extends Html
      *
      * @return string|null|void
      */
-    public function render() 
+    public function render()
     {
         //-----------------------//
         // 1. Get Data
@@ -105,27 +105,29 @@ class Update extends Html
         $data['profile_id'] = $this->request->get('variables', 0);
         
         //was it not included in the url ?
-        if(!$data['profile_id'] 
+        if (!$data['profile_id']
         && isset($_SESSION['me']['profile_id'])) {
             //get it from the session
             $data['profile_id'] = $_SESSION['me']['profile_id'];
         }
         
         //it's going to fail if we don't have the profile_id
-        if(!$data['profile_id']) {
+        if (!$data['profile_id']) {
             //we might as we an fail it now
             return $this->fail(
                 self::FAIL_404,
-                '/control/app/search');
+                '/control/app/search'
+            );
         }
         
         //-----------------------//
         // 2. Validate
         //is it me ?
-        if($_SESSION['me']['profile_id'] != $data['profile_id']) {
+        if ($_SESSION['me']['profile_id'] != $data['profile_id']) {
             return $this->fail(
                 self::FAIL_401,
-                '/control/app/search');
+                '/control/app/search'
+            );
         }
         
         //does it exist?
@@ -135,16 +137,17 @@ class Update extends Html
             ->process($data)
             ->getRow();
         
-        if(!$row) {
+        if (!$row) {
             return $this->fail(
                 self::FAIL_404,
-                '/control/app/search');
+                '/control/app/search'
+            );
         }
         
         //-----------------------//
         // 3. Process
         //if it's a post
-        if(!empty($_POST)) {
+        if (!empty($_POST)) {
             return $this->check($data);
         }
         
@@ -163,13 +166,13 @@ class Update extends Html
      *
      * @return string|null|void
      */
-    protected function check($data) 
+    protected function check($data)
     {
         //-----------------------//
         // 1. Get Data
         $data = array('item' => array_merge($data, $this->request->get('post')));
         
-        if(isset($data['item']['profile_birth']) 
+        if (isset($data['item']['profile_birth'])
             && !strtotime($data['item']['profile_birth'])
         ) {
             $data['item']['profile_birth'] = null;
@@ -182,11 +185,12 @@ class Update extends Html
             ->errors($data['item']);
         
         //if there are errors
-        if(!empty($errors)) {
+        if (!empty($errors)) {
             return $this->fail(
-                self::FAIL_406, 
-                $errors, 
-                $data['item']);
+                self::FAIL_406,
+                $errors,
+                $data['item']
+            );
         }
         
         //-----------------------//
@@ -196,17 +200,19 @@ class Update extends Html
                 ->job('profile-update')
                 ->setData($data['item'])
                 ->run();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return $this->fail(
-                $e->getMessage(), 
-                array(), 
-                $data['item']);
+                $e->getMessage(),
+                array(),
+                $data['item']
+            );
         }
         
         //NOTE: do something with results here
         
         return $this->success(
-            self::SUCCESS_200, 
-            '/control/app/search');
+            self::SUCCESS_200,
+            '/control/app/search'
+        );
     }
 }

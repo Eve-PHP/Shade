@@ -65,7 +65,7 @@ class Index extends Base
      *
      * @return array
      */
-    public function getProfileByToken($token) 
+    public function getProfileByToken($token)
     {
         //argument test
         Argument::i()->test(1, 'string');
@@ -74,14 +74,17 @@ class Index extends Base
             ->database()
             ->search('app')
             ->setColumns(
-                'profile.*', 
-                'app.*')
+                'profile.*',
+                'app.*'
+            )
             ->innerJoinOn(
-                'app_profile', 
-                'app_profile_app = app_id')
+                'app_profile',
+                'app_profile_app = app_id'
+            )
             ->innerJoinOn(
-                'profile', 
-                'app_profile_profile = profile_id')
+                'profile',
+                'app_profile_profile = profile_id'
+            )
             ->filterByAppToken($token)
             ->getRow();
     }
@@ -93,7 +96,7 @@ class Index extends Base
      * @param *int $profileId profile id
      * @return Eden\Mysql\Model
      */
-    public function linkProfile($appId, $profileId) 
+    public function linkProfile($appId, $profileId)
     {
         //argument test
         Argument::i()->test(1, 'int')->test(2, 'int');
@@ -113,13 +116,13 @@ class Index extends Base
     
     /**
      * Check for app permissions
-     * 
+     *
      * @param *int $addId     app id
      * @param *int $profileId profile id
-     * 
+     *
      * @return bool
      */
-    public function permissions($appId, $profileId) 
+    public function permissions($appId, $profileId)
     {
         //argument test
         Argument::i()->test(1, 'int')->test(2, 'int');
@@ -131,7 +134,7 @@ class Index extends Base
             ->filterByAppProfileProfile($profileId)
             ->getRow();
         
-        if(!$row) {
+        if (!$row) {
             return false;
         }
         
@@ -180,13 +183,13 @@ class Index extends Base
     
     /**
      * Unlink app to profile
-     * 
+     *
      * @param *int $addId     app id
      * @param *int $profileId profile id
-     * 
+     *
      * @return Eden\Mysql\Model
      */
-    public function unlinkProfile($appId, $profileId) 
+    public function unlinkProfile($appId, $profileId)
     {
         //argument test
         Argument::i()->test(1, 'int')->test(2, 'int');

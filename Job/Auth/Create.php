@@ -35,7 +35,7 @@ use Eve\Framework\Job\Exception;
  * @author   Christian Blanquera <cblanquera@openovate.com>
  * @standard PSR-2
  */
-class Create extends Base 
+class Create extends Base
 {
     const FAIL_406 = 'Invalid Data';
     
@@ -44,10 +44,10 @@ class Create extends Base
      *
      * @return void
      */
-    public function run() 
+    public function run()
     {
         //if no data
-        if(empty($this->data)) {
+        if (empty($this->data)) {
             //there should be a global catch somewhere
             throw new Exception(self::FAIL_406);
         }
@@ -61,7 +61,7 @@ class Create extends Base
             ->exists($this->data['profile_email']);
         
         //if it does
-        if($exists) {
+        if ($exists) {
             //not sure, throw an error ?
             throw new Exception('Email exists.');
         }
@@ -70,12 +70,12 @@ class Create extends Base
         $row = eve()
             ->model('profile')
             ->search()
-            ->process() 
+            ->process()
             ->filterByProfileEmail($this->data['profile_email'])
             ->getRow();
         
         //if no profile
-        if(empty($row)) {
+        if (empty($row)) {
             //create one
             $row = eve()
                 ->model('profile')
@@ -99,7 +99,8 @@ class Create extends Base
             ->model('auth')
             ->linkProfile(
                 $results['auth']['auth_id'],
-                $results['profile']['profile_id']);
+                $results['profile']['profile_id']
+            );
         
         return $results;
     }

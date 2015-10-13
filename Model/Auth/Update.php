@@ -47,7 +47,7 @@ class Update extends Base
      *
      * @return array error
      */
-    public function errors(array $data = array(), array $errors = array()) 
+    public function errors(array $data = array(), array $errors = array())
     {
         //prepare
         $data = $this->prepare($data);
@@ -55,7 +55,7 @@ class Update extends Base
         //REQUIRED
         
         // auth_id            Required
-        if(!isset($data['auth_id'])
+        if (!isset($data['auth_id'])
             || empty($data['auth_id'])
             || !$this('validation', $data['auth_id'])->isType('integer', true)
         ) {
@@ -63,21 +63,21 @@ class Update extends Base
         }
         
         //auth_slug        Required
-        if(!isset($data['auth_slug']) 
+        if (!isset($data['auth_slug'])
             || empty($data['auth_slug'])
         ) {
             $errors['auth_slug'] = self::INVALID_EMPTY;
         }
         
         // auth_permissions        Required
-        if(!isset($data['auth_permissions']) 
+        if (!isset($data['auth_permissions'])
             || empty($data['auth_permissions'])
         ) {
             $errors['auth_permissions'] = self::INVALID_REQUIRED;
         }
         
         //confirm            NOT IN SCHEMA
-        if(((!empty($data['auth_password']))
+        if (((!empty($data['auth_password']))
         || (!empty($data['confirm'])))
         && $data['confirm'] !== $data['auth_password']) {
             $errors['confirm'] = self::MISMATCH;
@@ -86,8 +86,8 @@ class Update extends Base
         //OPTIONAL
         
         // auth_flag
-        if(isset($data['auth_flag']) 
-        && !empty($data['auth_flag']) 
+        if (isset($data['auth_flag'])
+        && !empty($data['auth_flag'])
         && !$this('validation', $data['auth_flag'])->isType('small', true)) {
             $errors['auth_flag'] = self::INVALID_SMALL;
         }
@@ -101,10 +101,10 @@ class Update extends Base
      * @param array data
      * @return void
      */
-    public function process(array $data = array()) 
+    public function process(array $data = array())
     {
         //prevent uncatchable error
-        if(count($this->errors($data))) {
+        if (count($this->errors($data))) {
             throw new Exception(self::FAIL_406);
         }
         
@@ -124,72 +124,72 @@ class Update extends Base
             ->setAuthUpdated($updated);
         
         // auth_permissions        Required
-        if(isset($data['auth_permissions']) && !empty($data['auth_permissions'])) {
+        if (isset($data['auth_permissions']) && !empty($data['auth_permissions'])) {
             $model->setAuthPermissions($data['auth_permissions']);
         }
         
-        if(isset($data['auth_password']) && !empty($data['auth_password'])) {
+        if (isset($data['auth_password']) && !empty($data['auth_password'])) {
             $model->setAuthPassword(md5($data['auth_password']));
         }
         
-        if(isset($data['auth_slug']) && !empty($data['auth_slug'])) {
+        if (isset($data['auth_slug']) && !empty($data['auth_slug'])) {
             $model->setAuthSlug($data['auth_slug']);
         }
         
         //OPTIONAL
         
         // auth_type
-        if(isset($data['auth_type']) && !empty($data['auth_type'])) {
+        if (isset($data['auth_type']) && !empty($data['auth_type'])) {
             $model->setAuthType($data['auth_type']);
         }
         
         // auth_flag
-        if(isset($data['auth_flag']) && !empty($data['auth_flag'])) {
+        if (isset($data['auth_flag']) && !empty($data['auth_flag'])) {
             $model->setAuthFlag($data['auth_flag']);
         }
         
         // auth_facebook_token
-        if(isset($data['auth_facebook_token']) && !empty($data['auth_facebook_token'])) {
+        if (isset($data['auth_facebook_token']) && !empty($data['auth_facebook_token'])) {
             $model->setAuthFacebookToken($data['auth_facebook_token']);
         }
         
         // auth_facebook_secret
-        if(isset($data['auth_facebook_secret']) && !empty($data['auth_facebook_secret'])) {
+        if (isset($data['auth_facebook_secret']) && !empty($data['auth_facebook_secret'])) {
             $model->setAuthFacebookSecret($data['auth_facebook_secret']);
         }
         
         // auth_twitter_token
-        if(isset($data['auth_twitter_token']) && !empty($data['auth_twitter_token'])) {
+        if (isset($data['auth_twitter_token']) && !empty($data['auth_twitter_token'])) {
             $model->setAuthTwitterToken($data['auth_twitter_token']);
         }
         
         // auth_twitter_secret
-        if(isset($data['auth_twitter_secret']) && !empty($data['auth_twitter_secret'])) {
+        if (isset($data['auth_twitter_secret']) && !empty($data['auth_twitter_secret'])) {
             $model->setAuthTwitterSecret($data['auth_twitter_secret']);
         }
         
         // auth_linkedin_token
-        if(isset($data['auth_linkedin_token']) && !empty($data['auth_linkedin_token'])) {
+        if (isset($data['auth_linkedin_token']) && !empty($data['auth_linkedin_token'])) {
             $model->setAuthLinkedinToken($data['auth_linkedin_token']);
         }
         
         // auth_linkedin_secret
-        if(isset($data['auth_linkedin_secret']) && !empty($data['auth_linkedin_secret'])) {
+        if (isset($data['auth_linkedin_secret']) && !empty($data['auth_linkedin_secret'])) {
             $model->setAuthLinkedinSecret($data['auth_linkedin_secret']);
         }
         
         // auth_google_token
-        if(isset($data['auth_google_token']) && !empty($data['auth_google_token'])) {
+        if (isset($data['auth_google_token']) && !empty($data['auth_google_token'])) {
             $model->setAuthGoogleToken($data['auth_google_token']);
         }
         
         // auth_google_secret
-        if(isset($data['auth_google_secret']) && !empty($data['auth_google_secret'])) {
+        if (isset($data['auth_google_secret']) && !empty($data['auth_google_secret'])) {
             $model->setAuthGoogleSecret($data['auth_google_secret']);
         }
         
         // auth_google_secret
-        if(isset($data['auth_google_secret'])) {
+        if (isset($data['auth_google_secret'])) {
             $model->setAuthGoogleSecret($data['auth_google_secret']);
         }
         

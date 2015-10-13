@@ -45,12 +45,12 @@ class Logout extends Base
      *
      * @return array error
      */
-    public function errors(array $data = array(), array $errors = array()) 
+    public function errors(array $data = array(), array $errors = array())
     {
         //prepare
         $data = $this->prepare($data);
         
-        if(!isset($data['auth_id']) || empty($data['auth_id'])) {
+        if (!isset($data['auth_id']) || empty($data['auth_id'])) {
             $errors['auth_id'] = self::INVALID_REQUIRED;
         }
         
@@ -64,10 +64,10 @@ class Logout extends Base
      *
      * @return mixed
      */
-    public function process(array $data = array()) 
+    public function process(array $data = array())
     {
         //prevent uncatchable error
-        if(count($this->errors($data))) {
+        if (count($this->errors($data))) {
             throw new Exception(self::FAIL_406);
         }
         
@@ -78,33 +78,36 @@ class Logout extends Base
         $search = eve()->database()
             ->search('session')
             ->innerJoinOn(
-                'session_auth', 
-                'session_auth_session = session_id')
+                'session_auth',
+                'session_auth_session = session_id'
+            )
             ->innerJoinOn(
-                'session_app', 
-                'session_app_session = session_id')
+                'session_app',
+                'session_app_session = session_id'
+            )
             ->filterBySessionAuthAuth($data['auth_id']);
         
-        if(isset($data['session_token']) 
+        if (isset($data['session_token'])
             && $data['session_token']) {
             $search->addFilter(
-                'session_token = %s OR session_status = %s', 
-                $data['session_token'], 
-                'PENDING');
+                'session_token = %s OR session_status = %s',
+                $data['session_token'],
+                'PENDING'
+            );
         }
         
         $collection = $search
             ->getCollection()
-            ->loop(function($i) {
-                if(!$this[$i]) {
-                    return false;    
+            ->loop(function ($i) {
+                if (!$this[$i]) {
+                    return false;
                 }
                 
                 $this[$i]
                     ->remove('session_auth')
                     ->remove('session_app')
                     ->remove('session');
-            });    
+            });
         
         eve()->trigger('session-logout', $collection);
         

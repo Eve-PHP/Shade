@@ -45,7 +45,7 @@ class Create extends Base
      *
      * @return array error
      */
-    public function errors(array $data = array(), array $errors = array()) 
+    public function errors(array $data = array(), array $errors = array())
     {
         //prepare
         $data = $this->prepare($data);
@@ -53,7 +53,7 @@ class Create extends Base
         //REQUIRED
 
         // profile_name - required
-        if(!isset($data['profile_name']) || empty($data['profile_name'])) {
+        if (!isset($data['profile_name']) || empty($data['profile_name'])) {
             $errors['profile_name'] = self::INVALID_REQUIRED;
         }
         
@@ -61,15 +61,15 @@ class Create extends Base
         
         // profile_gender - one of
         $choices = array('male', 'female');
-        if(isset($data['profile_gender'])
-            && !empty($data['profile_gender']) 
+        if (isset($data['profile_gender'])
+            && !empty($data['profile_gender'])
             && !in_array($data['profile_gender'], $choices)
         ) {
             $errors['profile_gender'] = sprintf(self::INVALID_ONEOF, implode(',', $choices));
         }
         
         // profile_birth - date
-        if(isset($data['profile_birth']) 
+        if (isset($data['profile_birth'])
             && !empty($data['profile_birth'])
             && !$this('validation', $data['profile_birth'])->isType('date')
         ) {
@@ -77,7 +77,7 @@ class Create extends Base
         }
         
         // profile_facebook - url
-        if(isset($data['profile_facebook']) 
+        if (isset($data['profile_facebook'])
             && !empty($data['profile_facebook'])
             && !$this('validation', $data['profile_facebook'])->isType('url')
         ) {
@@ -85,7 +85,7 @@ class Create extends Base
         }
         
         // profile_linkedin - url
-        if(isset($data['profile_linkedin']) 
+        if (isset($data['profile_linkedin'])
             && !empty($data['profile_linkedin'])
             && !$this('validation', $data['profile_linkedin'])->isType('url')
         ) {
@@ -93,7 +93,7 @@ class Create extends Base
         }
         
         // profile_twitter - url
-        if(isset($data['profile_twitter']) 
+        if (isset($data['profile_twitter'])
             && !empty($data['profile_twitter'])
             && !$this('validation', $data['profile_twitter'])->isType('url')
         ) {
@@ -101,7 +101,7 @@ class Create extends Base
         }
         
         // profile_google - url
-        if(isset($data['profile_google']) 
+        if (isset($data['profile_google'])
             && !empty($data['profile_google'])
             && !$this('validation', $data['profile_google'])->isType('url')
         ) {
@@ -109,7 +109,7 @@ class Create extends Base
         }
         
         // profile_flag - small
-        if(isset($data['profile_flag']) 
+        if (isset($data['profile_flag'])
             && !empty($data['profile_flag'])
             && !$this('validate', $data['profile_flag'])->isType('small', true)
         ) {
@@ -126,10 +126,10 @@ class Create extends Base
      *
      * @return mixed
      */
-    public function process(array $data = array()) 
+    public function process(array $data = array())
     {
         //prevent uncatchable error
-        if(count($this->errors($data))) {
+        if (count($this->errors($data))) {
             throw new Exception(self::FAIL_406);
         }
         
@@ -141,12 +141,12 @@ class Create extends Base
         $updated = date('Y-m-d H:i:s');
         
         //upload profile_image
-        if(isset($_FILES['profile_image']['tmp_name'])
+        if (isset($_FILES['profile_image']['tmp_name'])
             && !empty($_FILES['profile_image']['tmp_name'])
         ) {
             $destination = eve()->path('upload');
             
-            if(!is_dir($destination)) {
+            if (!is_dir($destination)) {
                    mkdir($destination);
             }
             
@@ -174,105 +174,105 @@ class Create extends Base
         //OPTIONAL
         
         // profile_email
-        if(isset($data['profile_email'])
+        if (isset($data['profile_email'])
             && !empty($data['profile_email'])
         ) {
             $model->setProfileEmail($data['profile_email']);
         }
 
         // profile_phone
-        if(isset($data['profile_phone'])
+        if (isset($data['profile_phone'])
             && !empty($data['profile_phone'])
         ) {
             $model->setProfilePhone($data['profile_phone']);
         }
 
         // profile_detail
-        if(isset($data['profile_detail'])
+        if (isset($data['profile_detail'])
             && !empty($data['profile_detail'])
         ) {
             $model->setProfileDetail($data['profile_detail']);
         }
 
         // profile_image
-        if(isset($data['profile_image'])
+        if (isset($data['profile_image'])
             && !empty($data['profile_image'])
         ) {
             $model->setProfileImage($data['profile_image']);
         }
 
         // profile_company
-        if(isset($data['profile_company'])
+        if (isset($data['profile_company'])
             && !empty($data['profile_company'])
         ) {
             $model->setProfileCompany($data['profile_company']);
         }
 
         // profile_job
-        if(isset($data['profile_job'])
+        if (isset($data['profile_job'])
             && !empty($data['profile_job'])
         ) {
             $model->setProfileJob($data['profile_job']);
         }
 
         // profile_gender
-        if(isset($data['profile_gender'])
+        if (isset($data['profile_gender'])
             && !empty($data['profile_gender'])
         ) {
             $model->setProfileGender($data['profile_gender']);
         }
 
         // profile_birth
-        if(isset($data['profile_birth'])
+        if (isset($data['profile_birth'])
             && !empty($data['profile_birth'])
         ) {
             $model->setProfileBirth($data['profile_birth']);
         }
 
         // profile_facebook
-        if(isset($data['profile_facebook'])
+        if (isset($data['profile_facebook'])
             && !empty($data['profile_facebook'])
         ) {
             $model->setProfileFacebook($data['profile_facebook']);
         }
 
         // profile_linkedin
-        if(isset($data['profile_linkedin'])
+        if (isset($data['profile_linkedin'])
             && !empty($data['profile_linkedin'])
         ) {
             $model->setProfileLinkedin($data['profile_linkedin']);
         }
 
         // profile_twitter
-        if(isset($data['profile_twitter'])
+        if (isset($data['profile_twitter'])
             && !empty($data['profile_twitter'])
         ) {
             $model->setProfileTwitter($data['profile_twitter']);
         }
 
         // profile_google
-        if(isset($data['profile_google'])
+        if (isset($data['profile_google'])
             && !empty($data['profile_google'])
         ) {
             $model->setProfileGoogle($data['profile_google']);
         }
 
         // profile_reference
-        if(isset($data['profile_reference'])
+        if (isset($data['profile_reference'])
             && !empty($data['profile_reference'])
         ) {
             $model->setProfileReference($data['profile_reference']);
         }
         
         // profile_type
-        if(isset($data['profile_type'])
+        if (isset($data['profile_type'])
             && !empty($data['profile_type'])
         ) {
             $model->setProfileType($data['profile_type']);
         }
         
         // profile_flag
-        if(isset($data['profile_flag'])
+        if (isset($data['profile_flag'])
             && !empty($data['profile_flag'])
         ) {
             $model->setProfileFlag($data['profile_flag']);

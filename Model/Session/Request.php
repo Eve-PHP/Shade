@@ -36,7 +36,8 @@ use Eve\Framework\Model\Exception;
  * @standard PSR-2
  */
 class Request extends Base
-{    
+{
+
     /**
      * Returns errors if any
      *
@@ -45,16 +46,16 @@ class Request extends Base
      *
      * @return array error
      */
-    public function errors(array $data = array(), array $errors = array()) 
+    public function errors(array $data = array(), array $errors = array())
     {
         //prepare
         $data = $this->prepare($data);
         
-        if(empty($data['app_id'])) {
+        if (empty($data['app_id'])) {
             $errors['app_id'] = self::INVALID_REQUIRED;
         }
         
-        if(empty($data['auth_id'])) {
+        if (empty($data['auth_id'])) {
             $errors['auth_id'] = self::INVALID_REQUIRED;
         }
         
@@ -68,11 +69,11 @@ class Request extends Base
      *
      * @return mixed
      */
-    public function process(array $data = array()) 
+    public function process(array $data = array())
     {
 
         //prevent uncatchable error
-        if(count($this->errors($data))) {
+        if (count($this->errors($data))) {
             throw new Exception(self::FAIL_406);
         }
         
@@ -84,7 +85,7 @@ class Request extends Base
         $created = date('Y-m-d H:i:s');
         $updated = date('Y-m-d H:i:s');
         
-        if(!$data['session_permissions']) {
+        if (!$data['session_permissions']) {
             $data['session_permissions'] = 'public_sso';
         }
         
@@ -115,16 +116,16 @@ class Request extends Base
         $collection = $search->getCollection();
 
         // Both Physical and Virtual method Eden\Sql\Collection->remove() does not exist.
-        $collection->loop(function($i) {
-            if(!$this[$i]) {
-                return false;    
+        $collection->loop(function ($i) {
+            if (!$this[$i]) {
+                return false;
             }
             
             $this[$i]
                 ->remove('session')
                 ->remove('session_auth')
                 ->remove('session_app');
-        });    
+        });
         
         $model
             ->save('session')

@@ -47,7 +47,7 @@ class Set extends Base
      *
      * @return array error
      */
-    public function errors(array $data = array(), array $errors = array()) 
+    public function errors(array $data = array(), array $errors = array())
     {
         //prepare
         $data = $this->prepare($data);
@@ -60,14 +60,14 @@ class Set extends Base
         //if no profile id and email, $search for the email
         //    and if found, update it
         //    otherwise, insert it
-        if(!is_numeric($data['profile_id'])
+        if (!is_numeric($data['profile_id'])
         && !$this('validation', $data['profile_email'])->isType('email', true)) {
             $errors['profile_id']         = self::INVALID_REFERENCE;
             $errors['profile_email']     = self::INVALID_REFERENCE;
         }
         
         //if we do have a number, just update it
-        if(isset($data['profile_id']) 
+        if (isset($data['profile_id'])
             && is_numeric($data['profile_id'])) {
             return eve()->model('profile')->update()->errors($data, $errors);
         }
@@ -85,10 +85,10 @@ class Set extends Base
      *
      * @return mixed
      */
-    public function process(array $data = array()) 
+    public function process(array $data = array())
     {
         //prevent uncatchable error
-        if(count($this->errors($data))) {
+        if (count($this->errors($data))) {
             throw new Exception(self::FAIL_406);
         }
         
@@ -102,7 +102,7 @@ class Set extends Base
         //    otherwise, insert it
         
         //if we do have a number, just update it
-        if(is_numeric($data['profile_id'])) {
+        if (is_numeric($data['profile_id'])) {
             return Update::i()->process($data);
         }
         
@@ -116,7 +116,7 @@ class Set extends Base
         $row = $search->getRow();
         
         //if we found it
-        if($row) {
+        if ($row) {
             //update it
             $data['profile_id'] = $row['profile_id'];
             

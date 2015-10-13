@@ -34,7 +34,7 @@ use Eve\Framework\Job\Exception;
  * @author   Christian Blanquera <cblanquera@openovate.com>
  * @standard PSR-2
  */
-class Refresh extends Base 
+class Refresh extends Base
 {
     const FAIL_406 = 'Invalid Data';
     
@@ -43,10 +43,10 @@ class Refresh extends Base
      *
      * @return void
      */
-    public function run() 
+    public function run()
     {
         //if no data
-        if(empty($this->data)) {
+        if (empty($this->data)) {
             //there should be a global catch somewhere
             throw new Exception(self::FAIL_406);
         }
@@ -58,7 +58,7 @@ class Refresh extends Base
         //NEXT ...
         
         //if there is a app_id
-        if(isset($this->data['app_id'])) {
+        if (isset($this->data['app_id'])) {
             //remove the app
             $results['app'] = eve()
                 ->model('app')

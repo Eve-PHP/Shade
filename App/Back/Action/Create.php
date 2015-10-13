@@ -39,7 +39,7 @@ use Eve\Framework\Action\Html;
  *    -- $this->request->get('server') - $_SERVER data
  *       You are free to use the $_SERVER variable if you like
  *
- *    -- $this->request->get('body') - raw body for 
+ *    -- $this->request->get('body') - raw body for
  *       POST requests that provide JSON data for example
  *       instead of the default x-form-data
  *
@@ -50,10 +50,10 @@ use Eve\Framework\Action\Html;
  *    -- $this->response->set('body', 'Foo') - Sets the response body.
  *       Alternative for returning a string in render()
  *
- *    -- $this->response->set('headers', 'Foo', 'Bar') - Sets a 
+ *    -- $this->response->set('headers', 'Foo', 'Bar') - Sets a
  *       header item to 'Foo: Bar' given key/value
  *
- *    -- $this->response->set('headers', 'Foo', '') - Sets a 
+ *    -- $this->response->set('headers', 'Foo', '') - Sets a
  *       header item to 'Foo' given that no value is present
  *       QUIRK: $this->response->set('headers', 'Foo') will erase
  *       all existing headers
@@ -63,7 +63,7 @@ use Eve\Framework\Action\Html;
  * @author   Christian Blanquera <cblanquera@openovate.com>
  * @standard PSR-2
  */
-class Create extends Html 
+class Create extends Html
 {
     /**
      * @const string FAIL_406 Error template
@@ -90,10 +90,10 @@ class Create extends Html
      *
      * @return string|null|void
      */
-    public function render() 
+    public function render()
     {
         //if it's a post
-        if(!empty($_POST)) {
+        if (!empty($_POST)) {
             return $this->check();
         }
         
@@ -106,7 +106,7 @@ class Create extends Html
      *
      * @return string|null|void
      */
-    protected function check() 
+    protected function check()
     {
         //-----------------------//
         // 1. Get Data
@@ -117,8 +117,8 @@ class Create extends Html
         $data['item']['auth_slug'] = $data['item']['profile_email'];
         $data['item']['auth_permissions'] = implode(',', eve()->settings('scope'));
         
-        $data['item']['profile_image'] = 
-            'http://' . $_SERVER['HTTP_HOST'] . '/avatar/avatar-' 
+        $data['item']['profile_image'] =
+            'http://' . $_SERVER['HTTP_HOST'] . '/avatar/avatar-'
             . ((floor(rand() * 1000) % 11) + 1) . '.png';
         
         //-----------------------//
@@ -134,11 +134,12 @@ class Create extends Html
             ->errors($data['item'], $errors);
         
         //if there are errors
-        if(!empty($errors)) {
+        if (!empty($errors)) {
             return $this->fail(
-                self::FAIL_406, 
-                $errors, 
-                $data['item']);
+                self::FAIL_406,
+                $errors,
+                $data['item']
+            );
         }
         
         //-----------------------//
@@ -148,7 +149,7 @@ class Create extends Html
                 ->job('auth-create')
                 ->setData($data['item'])
                 ->run();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return $this->fail(
                 $e->getMessage(),
                 array(),
@@ -159,4 +160,3 @@ class Create extends Html
         return $this->success(self::SUCCESS_200, '/control/login');
     }
 }
-

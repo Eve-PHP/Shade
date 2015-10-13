@@ -30,7 +30,7 @@ use Eve\Framework\Action\Json;
  *
  * -- $this->request - The Request Object using Eden\Registry\Index
  *
- *    -- $this->request->get('source') - Information gathered 
+ *    -- $this->request->get('source') - Information gathered
  *       from the tokens like profile, app etc.. This information
  *       was provided by the Validator plugin
  *
@@ -43,7 +43,7 @@ use Eve\Framework\Action\Json;
  *    -- $this->request->get('server') - $_SERVER data
  *       You are free to use the $_SERVER variable if you like
  *
- *    -- $this->request->get('body') - raw body for 
+ *    -- $this->request->get('body') - raw body for
  *       POST requests that provide JSON data for example
  *       instead of the default x-form-data
  *
@@ -54,15 +54,15 @@ use Eve\Framework\Action\Json;
  *    -- $this->response->set('body', 'Foo') - Sets the response body.
  *       Alternative for returning a string in render()
  *
- *    -- $this->response->set('headers', 'Foo', 'Bar') - Sets a 
+ *    -- $this->response->set('headers', 'Foo', 'Bar') - Sets a
  *       header item to 'Foo: Bar' given key/value
  *
- *    -- $this->response->set('headers', 'Foo', '') - Sets a 
+ *    -- $this->response->set('headers', 'Foo', '') - Sets a
  *       header item to 'Foo' given that no value is present
  *       QUIRK: $this->response->set('headers', 'Foo') will erase
  *       all existing headers
  */
-class Search extends Json 
+class Search extends Json
 {
     /**
      * @var int $range Pagination range
@@ -74,7 +74,7 @@ class Search extends Json
      *
      * @return string|null|void
      */
-    public function render() 
+    public function render()
     {
         $data = $this->request->get('get');
         
@@ -89,7 +89,8 @@ class Search extends Json
                 'profile_id',
                 'profile_name',
                 'profile_image',
-                'profile_created')
+                'profile_created'
+            )
             ->getRows();
         
         //success

@@ -36,7 +36,8 @@ use Eve\Framework\Model\Exception;
  * @standard PSR-2
  */
 class Login extends Base
-{    
+{
+
     /**
      * Returns errors if any
      *
@@ -45,18 +46,18 @@ class Login extends Base
      *
      * @return array error
      */
-    public function errors(array $data = array(), array $errors = array()) 
+    public function errors(array $data = array(), array $errors = array())
     {
         //prepare
         $data = $this->prepare($data);
         
         //REQUIRED
 
-        if(!isset($data['auth_slug']) || empty($data['auth_slug'])) {
+        if (!isset($data['auth_slug']) || empty($data['auth_slug'])) {
             $errors['auth_slug'] = self::INVALID_REQUIRED;
         }
         
-        if(!isset($data['auth_password']) || empty($data['auth_password'])) {
+        if (!isset($data['auth_password']) || empty($data['auth_password'])) {
             $errors['auth_password'] = self::INVALID_REQUIRED;
         }
         
@@ -70,10 +71,10 @@ class Login extends Base
      *
      * @return mixed
      */
-    public function process(array $data = array()) 
+    public function process(array $data = array())
     {
         //prevent uncatchable error
-        if(count($this->errors($data))) {
+        if (count($this->errors($data))) {
             throw new Exception(self::FAIL_406);
         }
         

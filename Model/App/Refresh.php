@@ -45,10 +45,10 @@ class Refresh extends Base
      *
      * @return array error
      */
-    public function errors(array $data = array(), array $errors = array()) 
+    public function errors(array $data = array(), array $errors = array())
     {
         // app_id - required
-        if(!isset($data['app_id'])
+        if (!isset($data['app_id'])
         || !$this('validation', $data['app_id'])->isType('int', true)) {
             $errors['app_id'] = self::INVALID_REQUIRED;
         }
@@ -63,10 +63,10 @@ class Refresh extends Base
      *
      * @return mixed
      */
-    public function process(array $data = array()) 
+    public function process(array $data = array())
     {
         //prevent uncatchable error
-        if(count($this->errors($data))) {
+        if (count($this->errors($data))) {
             throw new Exception(self::FAIL_406);
         }
         
@@ -77,7 +77,7 @@ class Refresh extends Base
         $updated = date('Y-m-d H:i:s');
         
         $token = md5(uniqid());
-        $secret = md5(uniqid()); 
+        $secret = md5(uniqid());
         
         //SET WHAT WE KNOW
         $model = eve()

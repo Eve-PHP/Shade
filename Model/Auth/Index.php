@@ -54,7 +54,7 @@ class Index extends Base
      *
      * @param bool
      */
-    public function exists($slug) 
+    public function exists($slug)
     {
         //argument test
         Argument::i()->test(1, 'string');
@@ -76,7 +76,7 @@ class Index extends Base
      *
      * @return Eden\Mysql\Model
      */
-    public function linkProfile($authId, $profileId) 
+    public function linkProfile($authId, $profileId)
     {
         //argument test
         Argument::i()->test(1, 'int')->test(2, 'int');
@@ -121,7 +121,7 @@ class Index extends Base
      *
      * @return Eden\Mysql\Model
      */
-    public function unlinkProfile($authId, $profileId) 
+    public function unlinkProfile($authId, $profileId)
     {
         //argument test
         Argument::i()->test(1, 'int')->test(2, 'int');
