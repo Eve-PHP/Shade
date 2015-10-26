@@ -1,11 +1,12 @@
-<?php //-->
+<?php // -->
 require_once __DIR__ . '/vendor/autoload.php';
 
-// we're going to setup virtual server so
-// jobs and models will not loose it's original scope
+// initialize and run the worker, set up
+// required paths and load up default database
 Eve\Framework\Index::i(__DIR__, 'Eve')
 // set default paths
 ->defaultPaths()
 // set default database
 ->defaultDatabases()
+// run the worker
 ->work();
